@@ -1,4 +1,4 @@
-from .models import Claim
+from .models import Claim, Suggestion
 from .reviewer import summarize_statuses
 
 CATEGORY_GUIDE = {
@@ -8,7 +8,11 @@ CATEGORY_GUIDE = {
 }
 
 
-def build_report(claims: list[Claim], warnings: list[str] | None = None) -> str:
+def build_report(
+    claims: list[Claim],
+    warnings: list[str] | None = None,
+    suggestions: list[Suggestion] | None = None,
+) -> str:
     counts = summarize_statuses(claims)
     lines = [
         "# Claim Review",
@@ -41,6 +45,8 @@ def build_report(claims: list[Claim], warnings: list[str] | None = None) -> str:
     for claim in claims:
         lines.extend(_claim_lines(claim))
 
+    lines.extend(_suggestion_sections(suggestions or []))
+
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -55,4 +61,39 @@ def _claim_lines(claim: Claim) -> list[str]:
     if claim.suggested_rewrite != "":
         lines.append(f"- safer rewrite: {claim.suggested_rewrite}")
     lines.append("")
+    return lines
+
+
+def _suggestion_sections(suggestions: list[Suggestion]) -> list[str]:
+    career: list[Suggestion] = []
+    korean_polish: list[Suggestion] = []
+    for suggestion in suggestions:
+        match suggestion.kind:
+            case "career":
+                career.append(suggestion)
+            case "korean_polish":
+                korean_polish.append(suggestion)
+
+    lines: list[str] = []
+    lines.extend(_suggestion_section("Career Review", career))
+    lines.extend(_suggestion_section("Korean Polish", korean_polish))
+    return lines
+
+
+def _suggestion_section(title: str, suggestions: list[Suggestion]) -> list[str]:
+    if suggestions == []:
+        return []
+
+    lines = ["", f"## {title}", ""]
+    for suggestion in suggestions:
+        lines.extend(
+            [
+                f"### {suggestion.claim_id}: {suggestion.title}",
+                "",
+                f"- severity: {suggestion.severity}",
+                f"- detail: {suggestion.detail}",
+                f"- suggestion: {suggestion.suggested_text}",
+                "",
+            ],
+        )
     return lines

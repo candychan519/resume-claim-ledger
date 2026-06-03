@@ -25,3 +25,16 @@ def test_readme_documents_release_install_paths() -> None:
     assert "uv tool install git+https://github.com/candychan519/resume-claim-ledger" in content
     assert "uv tool install resume-claim-ledger" in content
     assert "uv run pytest -q" in content
+
+
+def test_readme_documents_advise_command() -> None:
+    # Given: the project README.
+    readme = Path("README.md")
+
+    # When: the README content is read.
+    content = readme.read_text(encoding="utf-8")
+
+    # Then: it documents the career advice command and output formats.
+    assert "resume-ledger advise" in content
+    assert "--polish-ko" in content
+    assert "--format json" in content

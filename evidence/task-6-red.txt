@@ -1,0 +1,54 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+____________________ test_readme_documents_advise_command _____________________
+
+    def test_readme_documents_advise_command() -> None:
+        # Given: the project README.
+        readme = Path("README.md")
+    
+        # When: the README content is read.
+        content = readme.read_text(encoding="utf-8")
+    
+        # Then: it documents the career advice command and output formats.
+>       assert "resume-ledger advise" in content
+E       AssertionError: assert 'resume-ledger advise' in '# Resume Claim Ledger\n\nTrack, verify, and rewrite resume claims with evidence before submission.\n\n## Install\n\n`...: 범위나 판단 기준을 뒷받침할 근거가 필요합니다.\n  - claim_id: CLM-002\n    status: verified\n    evidence_note: release checklist\n```\n'
+
+tests\test_readme_contract.py:38: AssertionError
+____________ test_ledger_schema_notes_suggestions_are_report_only _____________
+
+    def test_ledger_schema_notes_suggestions_are_report_only() -> None:
+        # Given: ledger schema documentation.
+        content = Path("docs/ledger-schema.md").read_text(encoding="utf-8")
+    
+        # When: suggestion storage policy is inspected.
+        # Then: suggestions are explicitly kept outside the ledger schema.
+>       assert "Suggestions are report-only" in content
+E       AssertionError: assert 'Suggestions are report-only' in '# Ledger Schema\n\n## Version 1\n\nGenerated ledgers use:\n\n```yaml\nschema_version: 1\nclaims:\n  - claim_id: CLM-0...d_rewrite`: safer rewrite suggestion when available.\n\nLegacy MVP ledgers without `schema_version` remain readable.\n'
+
+tests\test_ledger_schema_docs.py:29: AssertionError
+____________________ test_docs_define_advice_json_contract ____________________
+
+    def test_docs_define_advice_json_contract() -> None:
+        # Given: ledger schema documentation.
+        content = Path("docs/ledger-schema.md").read_text(encoding="utf-8")
+    
+        # When: advice JSON contract documentation is inspected.
+        # Then: every public advice JSON field is documented.
+        required = [
+            "Advice JSON",
+            "suggestions",
+            "kind",
+            "severity",
+            "title",
+            "detail",
+            "suggested_text",
+        ]
+        for field in required:
+>           assert field in content
+E           AssertionError: assert 'Advice JSON' in '# Ledger Schema\n\n## Version 1\n\nGenerated ledgers use:\n\n```yaml\nschema_version: 1\nclaims:\n  - claim_id: CLM-0...d_rewrite`: safer rewrite suggestion when available.\n\nLegacy MVP ledgers without `schema_version` remain readable.\n'
+
+tests\test_ledger_schema_docs.py:49: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_readme_contract.py::test_readme_documents_advise_command - ...
+FAILED tests/test_ledger_schema_docs.py::test_ledger_schema_notes_suggestions_are_report_only
+FAILED tests/test_ledger_schema_docs.py::test_docs_define_advice_json_contract

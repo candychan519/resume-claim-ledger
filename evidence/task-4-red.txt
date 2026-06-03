@@ -1,0 +1,43 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+__________ test_build_report_includes_career_and_polish_suggestions ___________
+
+    def test_build_report_includes_career_and_polish_suggestions() -> None:
+        # Given: a claim with career and Korean polish suggestions.
+        claims = [
+            Claim(
+                claim_id="CLM-001",
+                text="대규모 사용자를 대상으로 안정적인 MLOps 시스템을 구축했습니다.",
+                category="impact",
+                status="too_broad",
+                evidence_note="범위 근거가 필요합니다.",
+                suggested_rewrite="",
+            ),
+        ]
+        suggestions = [
+            Suggestion(
+                claim_id="CLM-001",
+                kind="career",
+                severity="warning",
+                title="성과 범위가 넓습니다.",
+                detail="근거가 약한 성과 주장은 과장으로 읽힐 수 있습니다.",
+                suggested_text="MLOps 시스템 구축 작업에 참여했습니다.",
+            ),
+            Suggestion(
+                claim_id="CLM-001",
+                kind="korean_polish",
+                severity="info",
+                title="번역투 표현입니다.",
+                detail="'를 통해' 표현이 반복되면 AI 문체처럼 읽힐 수 있습니다.",
+                suggested_text="MLOps 시스템 구축 작업에 참여했습니다.",
+            ),
+        ]
+    
+        # When: a report is built with suggestions.
+>       report = build_report(claims, suggestions=suggestions)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: build_report() got an unexpected keyword argument 'suggestions'
+
+tests\test_reporter.py:103: TypeError
+=========================== short test summary info ===========================
+FAILED tests/test_reporter.py::test_build_report_includes_career_and_polish_suggestions

@@ -1,0 +1,45 @@
+
+ Usage: resume-ledger [OPTIONS] COMMAND [ARGS]...
+
+ Track and review resume claims against evidence.
+
++- Options -------------------------------------------------------------------+
+| --install-completion          Install completion for the current shell.     |
+| --show-completion             Show completion for the current shell, to     |
+|                               copy it or customize the installation.        |
+| --help                        Show this message and exit.                   |
++-----------------------------------------------------------------------------+
++- Commands ------------------------------------------------------------------+
+| scan                                                                        |
+| review                                                                      |
+| report                                                                      |
+| advise                                                                      |
++-----------------------------------------------------------------------------+
+
+
+ Usage: resume-ledger advise [OPTIONS] LEDGER
+
++- Arguments -----------------------------------------------------------------+
+| *    ledger      PATH  Claim ledger YAML file. [required]                   |
++-----------------------------------------------------------------------------+
++- Options -------------------------------------------------------------------+
+| *  --out        -o                    PATH             Advice output path.  |
+|                                                        [required]           |
+|    --career         --no-career                        Include career and   |
+|                                                        HR review            |
+|                                                        suggestions.         |
+|                                                        [default: career]    |
+|    --polish-ko      --no-polish-ko                     Include Korean       |
+|                                                        polish suggestions.  |
+|                                                        [default: polish-ko] |
+|    --format                           [markdown|json]  Advice output        |
+|                                                        format.              |
+|                                                        [default: markdown]  |
+|    --strict                                            Fail when critical   |
+|                                                        suggestions remain.  |
+|    --help                                              Show this message    |
+|                                                        and exit.            |
++-----------------------------------------------------------------------------+
+
+__DONE__
+

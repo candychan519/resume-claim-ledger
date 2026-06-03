@@ -37,11 +37,30 @@ resume-ledger scan resume.md --out claims.yml
 resume-ledger review claims.yml
 resume-ledger report claims.yml --out claim-review.md
 resume-ledger report claims.yml --out claim-review.md --strict
+resume-ledger advise claims.yml --out advice.md
+resume-ledger advise claims.yml --format json --out advice.json
 ```
 
 ## Why This Exists
 
 AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resume Claim Ledger keeps a local evidence ledger so each resume bullet can be reviewed before submission.
+
+## Career Advice Mode
+
+`advise` adds offline career/HR and Korean polish suggestions on top of the evidence ledger:
+
+```bash
+resume-ledger advise claims.yml --out advice.md
+resume-ledger advise claims.yml --out advice.md --no-polish-ko
+resume-ledger advise claims.yml --format json --out advice.json
+```
+
+- Career review flags claims that may read as overbroad or unclear to a recruiter.
+- Korean polish flags AI-sounding phrases such as `~를 통해` without rewriting the source resume.
+- Suggestions are report-only. They do not edit the ledger or resume file.
+- Evidence safety comes first: the tool does not invent metrics, dates, employers, or stronger claims.
+
+Use `--polish-ko` to keep Korean polish enabled, or `--no-polish-ko` to produce only career/HR advice.
 
 ## Sample
 
