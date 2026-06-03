@@ -247,7 +247,7 @@ Wave 3:
 
   **Commit**: YES | Message: `feat(polish): add Korean polish rules` | Files: `src/resume_claim_ledger/korean_polish.py`, `tests/test_korean_polish.py`
 
-- [ ] 4. Integrate Suggestions Into Markdown Reports
+- [x] 4. Integrate Suggestions Into Markdown Reports
 
   **What to do**:
   - Extend `build_report` to accept optional `suggestions: list[Suggestion] | None`.
