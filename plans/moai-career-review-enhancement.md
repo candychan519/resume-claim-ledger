@@ -362,7 +362,7 @@ Wave 3:
 
   **Commit**: YES | Message: `feat(cli): add career advice command` | Files: `src/resume_claim_ledger/cli.py`, `tests/test_cli_e2e.py`
 
-- [ ] 6. Update Documentation and Examples
+- [x] 6. Update Documentation and Examples
 
   **What to do**:
   - Update `README.md` with `advise` usage and a short sample output.
