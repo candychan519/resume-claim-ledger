@@ -102,4 +102,6 @@ def test_workflows_use_node24_ready_action_versions() -> None:
     # Then: workflows use current Node 24-ready major versions.
     assert "actions/checkout@v6" in workflow_text
     assert "actions/setup-python@v6" in workflow_text
+    assert "actions/upload-artifact@v7.0.1" in workflow_text
+    assert "actions/download-artifact@v8.0.1" in workflow_text
     assert "astral-sh/setup-uv@v8.1.0" in workflow_text
