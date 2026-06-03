@@ -402,7 +402,7 @@ Wave 3:
 
   **Commit**: YES | Message: `docs: document career advice mode` | Files: `README.md`, `docs/ledger-schema.md`, `docs/maintenance.md`, `CHANGELOG.md`, optional `qa/career-polish-resume.md`, docs contract tests
 
-- [ ] 7. Final Deployment Readiness Verification
+- [x] 7. Final Deployment Readiness Verification
 
   **What to do**:
   - Run full local gate.
@@ -435,7 +435,7 @@ Wave 3:
   Scenario: full installed CLI flow with advice report
     Tool: tmux
     Steps:
-      tmux new-session -d -s ulw-qa-final 'uv run resume-ledger scan qa/sample-resume.md --out evidence/final-claims.yml && uv run resume-ledger advise evidence/final-claims.yml --out evidence/final-advice.md && uv run resume-ledger report evidence/final-claims.yml --out evidence/final-claim-review.md && sed -n "1,260p" evidence/final-advice.md'
+      tmux new-session -d -s ulw-qa-final 'uv run resume-ledger scan qa/career-polish-resume.md --out evidence/final-claims.yml && uv run resume-ledger advise evidence/final-claims.yml --out evidence/final-advice.md && uv run resume-ledger report evidence/final-claims.yml --out evidence/final-claim-review.md && sed -n "1,260p" evidence/final-advice.md'
       tmux capture-pane -pt ulw-qa-final -S -400
     Expected: captured output contains claim IDs, "Career Review", and "Korean Polish"
     Evidence: evidence/task-7-final-cli.txt

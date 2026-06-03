@@ -1,0 +1,14 @@
+schema_version: 1
+claims:
+  - claim_id: CLM-001
+    text: "배포 자동화를 통해 처리 시간을 30% 개선했습니다."
+    category: impact
+    status: too_broad
+    evidence_note: "범위나 판단 기준을 뒷받침할 근거가 필요합니다."
+    suggested_rewrite: "배포 자동화를 통해 처리 시간을 30% 개선 작업에 참여했습니다."
+  - claim_id: CLM-002
+    text: "배포 체크리스트를 정리하고 팀에 공유했습니다."
+    category: execution
+    status: verified
+    evidence_note: "release checklist"
+    suggested_rewrite: ""
