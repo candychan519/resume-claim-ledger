@@ -1,0 +1,28 @@
+F1 Plan Compliance Audit
+125:- [x] 1. Add Suggestion Data Model
+163:- [x] 2. Add Career/HR Rule Engine
+207:- [x] 3. Add Korean Polish Rule Engine
+250:- [x] 4. Integrate Suggestions Into Markdown Reports
+288:- [x] 5. Add `advise` CLI Command
+365:- [x] 6. Update Documentation and Examples
+405:- [x] 7. Final Deployment Readiness Verification
+
+Task evidence pairs
+task-1: red+green present
+task-2: red+green present
+task-3: red+green present
+task-4: red+green present
+task-5: red+green present
+task-6: red+green present
+
+Manual QA evidence
+evidence/task-1-suggestion-model.txt
+evidence/task-2-career-warning.txt
+evidence/task-3-korean-polish.txt
+evidence/task-4-report-suggestions.txt
+evidence/task-5-advise-cli.txt
+evidence/task-5-advise-cli-no-polish.txt
+evidence/task-5-advise-cli-json.txt
+evidence/task-6-docs-help.txt
+evidence/task-7-final-cli.txt
+evidence/task-7-cleanup.txt

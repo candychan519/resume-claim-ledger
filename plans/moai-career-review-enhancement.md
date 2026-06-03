@@ -453,13 +453,13 @@ Wave 3:
 ## Final Verification Wave
 > ALL must APPROVE before calling the implementation complete.
 
-- [ ] F1. Plan Compliance Audit
+- [x] F1. Plan Compliance Audit
   - Confirm each task has test-first instructions, QA scenario, acceptance criteria, and commit message.
-- [ ] F2. Code Quality Review
+- [x] F2. Code Quality Review
   - Run `uv run ruff check .` and `uv run basedpyright`.
-- [ ] F3. Real Manual QA
+- [x] F3. Real Manual QA
   - Run every tmux scenario listed above and capture evidence files.
-- [ ] F4. Scope Fidelity Check
+- [x] F4. Scope Fidelity Check
   - Confirm no private MoAI files are imported.
   - Confirm no source resume file is overwritten.
   - Confirm no external network/API is required.

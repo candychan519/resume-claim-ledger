@@ -1,0 +1,6 @@
+F4 Scope Fidelity Check
+private MoAI runtime refs: none
+product resume writes: none
+external network/API refs in src: none
+JSON contract docs: present
+unverified strengthening guard docs: present
