@@ -15,15 +15,19 @@ uv build
 
 Publish to TestPyPI before production PyPI. Configure a TestPyPI Trusted Publisher for:
 
+- project name: `resume-claim-ledger`
 - owner: `candychan519`
 - repository: `resume-claim-ledger`
 - workflow filename: `release.yml`
 - environment: `testpypi`
 
+For the first upload, create it as a pending publisher in TestPyPI. The first successful workflow run will create the TestPyPI project.
+
 ## production PyPI
 
 Production PyPI publishing uses Trusted Publishing through GitHub Actions OIDC and the `pypi` GitHub environment. Configure the PyPI Trusted Publisher with:
 
+- project name: `resume-claim-ledger`
 - owner: `candychan519`
 - repository: `resume-claim-ledger`
 - workflow filename: `release.yml`

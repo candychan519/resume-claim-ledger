@@ -25,6 +25,17 @@ def test_release_docs_define_testpypi_first_flow() -> None:
     assert testpypi_index < pypi_index
 
 
+def test_release_docs_include_pending_publisher_details() -> None:
+    # Given: release documentation.
+    content = Path("docs/releasing.md").read_text(encoding="utf-8")
+
+    # When: first-time package publishing setup is inspected.
+    # Then: release operators know the exact pending publisher configuration.
+    assert "pending publisher" in content.casefold()
+    assert "project name: `resume-claim-ledger`" in content
+    assert "workflow filename: `release.yml`" in content
+
+
 def test_release_docs_describe_yank_not_replace_policy() -> None:
     # Given: release documentation.
     content = Path("docs/releasing.md").read_text(encoding="utf-8")
