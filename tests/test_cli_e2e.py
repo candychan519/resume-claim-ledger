@@ -119,3 +119,96 @@ def test_report_strict_mode_when_unverified_claims_exist_exits_nonzero(tmp_path:
     # Then: strict mode blocks unresolved claim statuses.
     assert result.returncode != 0
     assert "needs_evidence" in result.stderr
+
+
+def test_advise_writes_career_and_korean_polish_report(tmp_path: Path) -> None:
+    # Given: a ledger with an unresolved Korean claim.
+    ledger = tmp_path / "claims.yml"
+    advice = tmp_path / "advice.md"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "배포 자동화를 통해 처리 시간을 30% 개선했습니다."',
+                "    category: impact",
+                "    status: too_broad",
+                '    evidence_note: "근거 필요"',
+                '    suggested_rewrite: "배포 자동화로 처리 시간을 30% 개선했습니다."',
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: career advice runs through the CLI.
+    result = run_cli(["run", "resume-ledger", "advise", str(ledger), "--out", str(advice)])
+
+    # Then: markdown advice contains both advice sections.
+    content = advice.read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert "## Career Review" in content
+    assert "## Korean Polish" in content
+
+
+def test_advise_when_no_suggestions_writes_calm_report(tmp_path: Path) -> None:
+    # Given: a verified plain claim.
+    ledger = tmp_path / "claims.yml"
+    advice = tmp_path / "advice.md"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "배포 체크리스트를 정리했습니다."',
+                "    category: execution",
+                "    status: verified",
+                '    evidence_note: "release checklist"',
+                '    suggested_rewrite: ""',
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: career advice runs through the CLI.
+    result = run_cli(["run", "resume-ledger", "advise", str(ledger), "--out", str(advice)])
+
+    # Then: the report succeeds without noisy empty sections.
+    content = advice.read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert "No career or Korean polish suggestions found." in content
+    assert "## Career Review" not in content
+
+
+def test_advise_json_outputs_stable_suggestion_contract(tmp_path: Path) -> None:
+    # Given: a ledger with an unresolved Korean claim.
+    ledger = tmp_path / "claims.yml"
+    advice = tmp_path / "advice.json"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "대규모 사용자를 대상으로 안정적인 MLOps 시스템을 구축했습니다."',
+                "    category: impact",
+                "    status: too_broad",
+                '    evidence_note: "근거 필요"',
+                '    suggested_rewrite: "MLOps 시스템 구축 작업에 참여했습니다."',
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: JSON advice runs through the CLI.
+    result = run_cli(
+        ["run", "resume-ledger", "advise", str(ledger), "--out", str(advice), "--format", "json"],
+    )
+
+    # Then: the output exposes the stable machine-readable contract.
+    payload = advice.read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert '"schema_version": 1' in payload
+    assert '"claim_id": "CLM-001"' in payload
+    assert '"kind": "career"' in payload

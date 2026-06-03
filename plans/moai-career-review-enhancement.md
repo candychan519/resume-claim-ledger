@@ -285,7 +285,7 @@ Wave 3:
 
   **Commit**: YES | Message: `feat(report): include career review suggestions` | Files: `src/resume_claim_ledger/reporter.py`, `tests/test_reporter.py`
 
-- [ ] 5. Add `advise` CLI Command
+- [x] 5. Add `advise` CLI Command
 
   **What to do**:
   - Add `resume-ledger advise claims.yml --out advice.md`.

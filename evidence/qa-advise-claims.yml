@@ -1,0 +1,8 @@
+schema_version: 1
+claims:
+  - claim_id: CLM-001
+    text: "배포 자동화를 통해 처리 시간을 30% 개선했습니다."
+    category: impact
+    status: too_broad
+    evidence_note: "근거 필요"
+    suggested_rewrite: "배포 자동화로 처리 시간을 30% 개선했습니다."

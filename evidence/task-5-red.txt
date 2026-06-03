@@ -1,0 +1,179 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+_____________ test_advise_writes_career_and_korean_polish_report ______________
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-16/test_advise_writes_career_and_0')
+
+    def test_advise_writes_career_and_korean_polish_report(tmp_path: Path) -> None:
+        # Given: a ledger with an unresolved Korean claim.
+        ledger = tmp_path / "claims.yml"
+        advice = tmp_path / "advice.md"
+        _ = ledger.write_text(
+            joined_lines(
+                [
+                    "schema_version: 1",
+                    "claims:",
+                    "  - claim_id: CLM-001",
+                    '    text: "배포 자동화를 통해 처리 시간을 30% 개선했습니다."',
+                    "    category: impact",
+                    "    status: too_broad",
+                    '    evidence_note: "근거 필요"',
+                    '    suggested_rewrite: "배포 자동화로 처리 시간을 30% 개선했습니다."',
+                ],
+            ),
+            encoding="utf-8",
+        )
+    
+        # When: career advice runs through the CLI.
+        result = run_cli(["run", "resume-ledger", "advise", str(ledger), "--out", str(advice)])
+    
+        # Then: markdown advice contains both advice sections.
+>       content = advice.read_text(encoding="utf-8")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_cli_e2e.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-16/test_advise_writes_career_and_0/advice.md')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\wjfeo\\AppData\\Local\\Temp\\pytest-of-wjfeo\\pytest-16\\test_advise_writes_career_and_0\\advice.md'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: FileNotFoundError
+_____________ test_advise_when_no_suggestions_writes_calm_report ______________
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-16/test_advise_when_no_suggestion0')
+
+    def test_advise_when_no_suggestions_writes_calm_report(tmp_path: Path) -> None:
+        # Given: a verified plain claim.
+        ledger = tmp_path / "claims.yml"
+        advice = tmp_path / "advice.md"
+        _ = ledger.write_text(
+            joined_lines(
+                [
+                    "schema_version: 1",
+                    "claims:",
+                    "  - claim_id: CLM-001",
+                    '    text: "배포 체크리스트를 정리했습니다."',
+                    "    category: execution",
+                    "    status: verified",
+                    '    evidence_note: "release checklist"',
+                    '    suggested_rewrite: ""',
+                ],
+            ),
+            encoding="utf-8",
+        )
+    
+        # When: career advice runs through the CLI.
+        result = run_cli(["run", "resume-ledger", "advise", str(ledger), "--out", str(advice)])
+    
+        # Then: the report succeeds without noisy empty sections.
+>       content = advice.read_text(encoding="utf-8")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_cli_e2e.py:178: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-16/test_advise_when_no_suggestion0/advice.md')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\wjfeo\\AppData\\Local\\Temp\\pytest-of-wjfeo\\pytest-16\\test_advise_when_no_suggestion0\\advice.md'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: FileNotFoundError
+_____________ test_advise_json_outputs_stable_suggestion_contract _____________
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-16/test_advise_json_outputs_stabl0')
+
+    def test_advise_json_outputs_stable_suggestion_contract(tmp_path: Path) -> None:
+        # Given: a ledger with an unresolved Korean claim.
+        ledger = tmp_path / "claims.yml"
+        advice = tmp_path / "advice.json"
+        _ = ledger.write_text(
+            joined_lines(
+                [
+                    "schema_version: 1",
+                    "claims:",
+                    "  - claim_id: CLM-001",
+                    '    text: "대규모 사용자를 대상으로 안정적인 MLOps 시스템을 구축했습니다."',
+                    "    category: impact",
+                    "    status: too_broad",
+                    '    evidence_note: "근거 필요"',
+                    '    suggested_rewrite: "MLOps 시스템 구축 작업에 참여했습니다."',
+                ],
+            ),
+            encoding="utf-8",
+        )
+    
+        # When: JSON advice runs through the CLI.
+        result = run_cli(
+            ["run", "resume-ledger", "advise", str(ledger), "--out", str(advice), "--format", "json"],
+        )
+    
+        # Then: the output exposes the stable machine-readable contract.
+>       payload = advice.read_text(encoding="utf-8")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_cli_e2e.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-16/test_advise_json_outputs_stabl0/advice.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\wjfeo\\AppData\\Local\\Temp\\pytest-of-wjfeo\\pytest-16\\test_advise_json_outputs_stabl0\\advice.json'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED tests/test_cli_e2e.py::test_advise_writes_career_and_korean_polish_report
+FAILED tests/test_cli_e2e.py::test_advise_when_no_suggestions_writes_calm_report
+FAILED tests/test_cli_e2e.py::test_advise_json_outputs_stable_suggestion_contract
