@@ -60,3 +60,45 @@ def test_readme_sample_matches_versioned_ledger_schema() -> None:
     assert "schema_version: 1" in content
     assert "category: impact" in content
     assert "suggested_rewrite:" in content
+
+
+def test_readme_documents_python_and_uv_prerequisites() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: the install section is inspected.
+    # Then: first-time users can see the runtime and tool prerequisites.
+    assert "Python 3.13" in content
+    assert "uv" in content
+
+
+def test_readme_links_schema_and_release_docs() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: public documentation links are inspected.
+    # Then: users can find schema and publishing details without duplicated policy text.
+    assert "docs/ledger-schema.md" in content
+    assert "docs/releasing.md" in content
+
+
+def test_readme_documents_strict_and_malformed_ledger_behavior() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: submission-gate and invalid-ledger guidance is inspected.
+    # Then: users can anticipate strict failures and malformed-ledger warnings.
+    assert "--strict" in content
+    assert "submission gate" in content
+    assert "Malformed ledger" in content
+
+
+def test_readme_documents_advice_json_schema_or_schema_doc_link() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: JSON advice output guidance is inspected.
+    # Then: users can find the stable Advice JSON contract.
+    assert "--format json" in content
+    assert "Advice JSON" in content
+    assert "docs/ledger-schema.md" in content

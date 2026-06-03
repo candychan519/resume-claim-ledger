@@ -4,6 +4,8 @@ Track and verify resume claims, then suggest safer wording before submission.
 
 ## Install
 
+Requires Python 3.13+ and [uv](https://docs.astral.sh/uv/).
+
 ```bash
 uv tool install .
 ```
@@ -19,6 +21,8 @@ After the first PyPI release:
 ```bash
 uv tool install resume-claim-ledger
 ```
+
+Release and publishing details live in [docs/releasing.md](docs/releasing.md).
 
 For local development:
 
@@ -41,6 +45,11 @@ resume-ledger advise claims.yml --out advice.md
 resume-ledger advise claims.yml --format json --out advice.json
 ```
 
+Use `report --strict` as a submission gate: unresolved claims exit non-zero so
+they can block a release or final resume handoff. Malformed ledger files are
+reported as warnings in the generated report, including `Malformed ledger`
+messages, instead of editing the source file.
+
 ## Why This Exists
 
 AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resume Claim Ledger keeps a local evidence ledger so each resume bullet can be reviewed before submission. Advice is report-only: it can suggest safer wording, but it does not rewrite your source resume or ledger.
@@ -61,6 +70,7 @@ resume-ledger advise claims.yml --format json --out advice.json
 - Evidence safety comes first: the tool does not invent metrics, dates, employers, or stronger claims.
 
 Use `--polish-ko` to keep Korean polish enabled, or `--no-polish-ko` to produce only career/HR advice.
+Advice JSON uses a stable report-only schema; see [docs/ledger-schema.md](docs/ledger-schema.md).
 
 ## Sample
 
@@ -89,3 +99,5 @@ claims:
     evidence_note: "release checklist"
     suggested_rewrite: ""
 ```
+
+For the full ledger and Advice JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).
