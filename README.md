@@ -1,6 +1,6 @@
 # Resume Claim Ledger
 
-Track, verify, and rewrite resume claims with evidence before submission.
+Track and verify resume claims, then suggest safer wording before submission.
 
 ## Install
 
@@ -43,7 +43,7 @@ resume-ledger advise claims.yml --format json --out advice.json
 
 ## Why This Exists
 
-AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resume Claim Ledger keeps a local evidence ledger so each resume bullet can be reviewed before submission.
+AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resume Claim Ledger keeps a local evidence ledger so each resume bullet can be reviewed before submission. Advice is report-only: it can suggest safer wording, but it does not rewrite your source resume or ledger.
 
 ## Career Advice Mode
 
@@ -74,11 +74,18 @@ Input:
 Output:
 
 ```yaml
+schema_version: 1
 claims:
   - claim_id: CLM-001
+    text: "대규모 사용자를 대상으로 안정적인 MLOps 시스템을 구축했습니다."
+    category: impact
     status: too_broad
-    evidence_note: 범위나 판단 기준을 뒷받침할 근거가 필요합니다.
+    evidence_note: "범위나 판단 기준을 뒷받침할 근거가 필요합니다."
+    suggested_rewrite: "MLOps 시스템 구축 작업에 참여했습니다."
   - claim_id: CLM-002
+    text: "배포 체크리스트를 도입했습니다."
+    category: execution
     status: verified
-    evidence_note: release checklist
+    evidence_note: "release checklist"
+    suggested_rewrite: ""
 ```

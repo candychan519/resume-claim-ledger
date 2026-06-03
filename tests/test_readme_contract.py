@@ -38,3 +38,25 @@ def test_readme_documents_advise_command() -> None:
     assert "resume-ledger advise" in content
     assert "--polish-ko" in content
     assert "--format json" in content
+
+
+def test_readme_describes_report_only_advice_not_source_rewriting() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: the product promise is inspected.
+    # Then: it avoids implying that the tool rewrites source resumes automatically.
+    assert "rewrite resume claims" not in content
+    assert "suggest safer wording" in content
+    assert "report-only" in content
+
+
+def test_readme_sample_matches_versioned_ledger_schema() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: the sample ledger output is inspected.
+    # Then: it shows the current versioned ledger fields.
+    assert "schema_version: 1" in content
+    assert "category: impact" in content
+    assert "suggested_rewrite:" in content
