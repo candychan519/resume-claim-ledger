@@ -160,7 +160,7 @@ Wave 3:
 
   **Commit**: YES | Message: `feat(model): add review suggestion model` | Files: `src/resume_claim_ledger/models.py`, `tests/test_suggestions_model.py`
 
-- [ ] 2. Add Career/HR Rule Engine
+- [x] 2. Add Career/HR Rule Engine
 
   **What to do**:
   - Add `src/resume_claim_ledger/career_advisor.py`.
