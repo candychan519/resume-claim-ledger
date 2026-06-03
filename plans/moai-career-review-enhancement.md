@@ -204,7 +204,7 @@ Wave 3:
 
   **Commit**: YES | Message: `feat(advisor): add career risk rules` | Files: `src/resume_claim_ledger/career_advisor.py`, `tests/test_career_advisor.py`
 
-- [ ] 3. Add Korean Polish Rule Engine
+- [x] 3. Add Korean Polish Rule Engine
 
   **What to do**:
   - Add `src/resume_claim_ledger/korean_polish.py`.
