@@ -86,3 +86,20 @@ def test_workflows_opt_into_node24_actions_runtime() -> None:
         assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in workflow_path.read_text(
             encoding="utf-8",
         )
+
+
+def test_workflows_use_node24_ready_action_versions() -> None:
+    # Given: workflows that use JavaScript actions.
+    workflow_text = "\n".join(
+        [
+            Path(".github/workflows/ci.yml").read_text(encoding="utf-8"),
+            Path(".github/workflows/release.yml").read_text(encoding="utf-8"),
+            Path(".github/workflows/security.yml").read_text(encoding="utf-8"),
+        ],
+    )
+
+    # When: action versions are inspected.
+    # Then: workflows use current Node 24-ready major versions.
+    assert "actions/checkout@v6" in workflow_text
+    assert "actions/setup-python@v6" in workflow_text
+    assert "astral-sh/setup-uv@v8" in workflow_text
