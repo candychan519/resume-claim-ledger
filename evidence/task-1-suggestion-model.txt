@@ -1,0 +1,24 @@
+Suggestion(claim_id='CLM-001', kind='career', severity='warning', title='Role un
+clear', detail='role unclear', suggested_text='clarify role')
+__DONE__
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
