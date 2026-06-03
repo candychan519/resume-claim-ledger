@@ -70,3 +70,19 @@ def test_workflows_use_minimal_permissions() -> None:
     assert "permissions:\n  contents: read" in ci
     assert "contents: read" in release
     assert "id-token: write" in release
+
+
+def test_workflows_opt_into_node24_actions_runtime() -> None:
+    # Given: workflows that use JavaScript actions.
+    workflow_paths = [
+        Path(".github/workflows/ci.yml"),
+        Path(".github/workflows/release.yml"),
+        Path(".github/workflows/security.yml"),
+    ]
+
+    # When: their environment is inspected.
+    # Then: they opt into Node 24 before GitHub's runner default changes.
+    for workflow_path in workflow_paths:
+        assert "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true" in workflow_path.read_text(
+            encoding="utf-8",
+        )
