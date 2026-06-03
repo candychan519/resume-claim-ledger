@@ -8,12 +8,35 @@ Track, verify, and rewrite resume claims with evidence before submission.
 uv tool install .
 ```
 
+From GitHub:
+
+```bash
+uv tool install git+https://github.com/candychan519/resume-claim-ledger
+```
+
+After the first PyPI release:
+
+```bash
+uv tool install resume-claim-ledger
+```
+
+For local development:
+
+```bash
+uv sync --dev
+uv run pytest -q
+uv run ruff check .
+uv run basedpyright
+uv build
+```
+
 ## Usage
 
 ```bash
 resume-ledger scan resume.md --out claims.yml
 resume-ledger review claims.yml
 resume-ledger report claims.yml --out claim-review.md
+resume-ledger report claims.yml --out claim-review.md --strict
 ```
 
 ## Why This Exists

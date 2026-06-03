@@ -1,3 +1,4 @@
+schema_version: 1
 claims:
   - claim_id: CLM-001
     text: "대규모 사용자를 대상으로 안정적인 MLOps 시스템을 구축했습니다."
