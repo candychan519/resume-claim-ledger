@@ -1,0 +1,19 @@
+claims:
+  - claim_id: CLM-001
+    text: "대규모 사용자를 대상으로 안정적인 MLOps 시스템을 구축했습니다."
+    category: impact
+    status: too_broad
+    evidence_note: "범위나 판단 기준을 뒷받침할 근거가 필요합니다."
+    suggested_rewrite: "MLOps 시스템 구축 작업에 참여했습니다."
+  - claim_id: CLM-002
+    text: "배포 체크리스트를 도입해 릴리스 누락을 줄였습니다."
+    category: execution
+    status: verified
+    evidence_note: "release checklist"
+    suggested_rewrite: ""
+  - claim_id: CLM-003
+    text: "장애 대응 문서를 정리했습니다."
+    category: execution
+    status: needs_evidence
+    evidence_note: "구체적인 근거, 지표, 산출물 링크 중 하나가 필요합니다."
+    suggested_rewrite: ""

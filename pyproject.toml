@@ -1,0 +1,52 @@
+[project]
+name = "resume-claim-ledger"
+version = "0.1.0"
+description = "Track and review resume claims against evidence before submission."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "rich>=14.0.0",
+    "typer>=0.16.0",
+]
+
+[project.scripts]
+resume-ledger = "resume_claim_ledger.cli:app"
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.31.0",
+    "pytest>=8.4.0",
+    "ruff>=0.12.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.0,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = "src"
+module-name = "resume_claim_ledger"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.basedpyright]
+typeCheckingMode = "all"
+pythonVersion = "3.13"
+include = ["src", "tests"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812",
+    "D100",
+    "D101",
+    "D103",
+    "D104",
+    "S101",
+]
