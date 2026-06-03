@@ -4,10 +4,28 @@ version = "0.1.0"
 description = "Track and review resume claims against evidence before submission."
 readme = "README.md"
 requires-python = ">=3.13"
+license = "MIT"
+authors = [
+    { name = "candychan519" },
+]
+keywords = ["resume", "career", "evidence", "cli", "job-search"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Utilities",
+]
 dependencies = [
     "rich>=14.0.0",
     "typer>=0.16.0",
 ]
+
+[project.urls]
+Repository = "https://github.com/candychan519/resume-claim-ledger"
+Issues = "https://github.com/candychan519/resume-claim-ledger/issues"
 
 [project.scripts]
 resume-ledger = "resume_claim_ledger.cli:app"
@@ -50,3 +68,6 @@ ignore = [
     "D104",
     "S101",
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_cli_e2e.py" = ["S603"]

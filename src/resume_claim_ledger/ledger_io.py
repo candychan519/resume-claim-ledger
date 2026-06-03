@@ -1,12 +1,21 @@
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Final
 
 from .models import Claim, ClaimCategory, ClaimStatus
 
 MIN_QUOTED_LENGTH = 2
+SCHEMA_VERSION: Final = 1
+
+
+@dataclass(frozen=True, slots=True)
+class LedgerReadResult:
+    claims: list[Claim]
+    warnings: list[str]
 
 
 def write_ledger(path: Path, claims: list[Claim]) -> None:
-    lines = ["claims:"]
+    lines = [f"schema_version: {SCHEMA_VERSION}", "claims:"]
     for claim in claims:
         lines.extend(
             [
@@ -22,8 +31,17 @@ def write_ledger(path: Path, claims: list[Claim]) -> None:
 
 
 def read_ledger(path: Path) -> list[Claim]:
-    items = _parse_generated_yaml(path.read_text(encoding="utf-8"))
-    return [_claim_from_fields(fields) for fields in items]
+    return read_ledger_result(path).claims
+
+
+def read_ledger_result(path: Path) -> LedgerReadResult:
+    content = path.read_text(encoding="utf-8")
+    items = _parse_generated_yaml(content)
+    warnings = _warnings_for_content(content, items)
+    return LedgerReadResult(
+        claims=[_claim_from_fields(fields) for fields in items],
+        warnings=warnings,
+    )
 
 
 def _quote(value: str) -> str:
@@ -57,6 +75,15 @@ def _parse_generated_yaml(content: str) -> list[dict[str, str]]:
     if current:
         records.append(current)
     return records
+
+
+def _warnings_for_content(content: str, items: list[dict[str, str]]) -> list[str]:
+    has_claims_key = any(line.strip() == "claims:" for line in content.splitlines())
+    if not has_claims_key:
+        return ["Malformed ledger shape: expected claims list."]
+    if items == [] and any(line.strip().startswith("- ") for line in content.splitlines()):
+        return ["Malformed ledger shape: expected claim records."]
+    return []
 
 
 def _field_from_line(line: str) -> dict[str, str]:
