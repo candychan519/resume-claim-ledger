@@ -9,12 +9,17 @@ from rich.table import Table
 from .career_advisor import advise_career
 from .korean_polish import advise_korean_polish
 from .ledger_io import read_ledger, read_ledger_result, write_ledger
-from .models import Claim, Suggestion, SuggestionDict, suggestion_to_dict
+from .models import Claim, ClaimStatus, Suggestion, SuggestionDict, suggestion_to_dict
 from .reporter import build_report
 from .reviewer import summarize_statuses
 from .scanner import extract_claims
 
 AdviceFormat = Literal["markdown", "json"]
+UNRESOLVED_STATUSES: tuple[ClaimStatus, ...] = (
+    "needs_evidence",
+    "too_broad",
+    "rewrite_needed",
+)
 
 
 class AdvicePayload(TypedDict):
@@ -52,6 +57,35 @@ def review(
     for status, count in counts.items():
         table.add_row(status, str(count))
     console.print(table)
+
+
+@app.command()
+def doctor(
+    ledger: Annotated[Path, typer.Argument(help="Claim ledger YAML file.")],
+) -> None:
+    if not ledger.exists():
+        error_console.print(f"Ledger file does not exist: {ledger}")
+        raise typer.Exit(1)
+
+    result = read_ledger_result(ledger)
+    counts = summarize_statuses(result.claims)
+    table = Table(title="Submission Doctor")
+    table.add_column("Check")
+    table.add_column("Result", justify="right")
+    table.add_row("warnings", str(len(result.warnings)))
+    for status, count in counts.items():
+        table.add_row(status, str(count))
+    console.print(table)
+
+    unresolved = [status for status in UNRESOLVED_STATUSES if counts[status] > 0]
+    if result.warnings != []:
+        error_console.print(f"Doctor found ledger warnings: {', '.join(result.warnings)}")
+    if unresolved != []:
+        error_console.print(f"Doctor found unresolved claims: {', '.join(unresolved)}")
+    if result.warnings != [] or unresolved != []:
+        raise typer.Exit(1)
+
+    console.print("Ready for submission.")
 
 
 @app.command()

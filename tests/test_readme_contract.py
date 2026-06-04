@@ -11,6 +11,7 @@ def test_readme_mentions_core_commands() -> None:
     # Then: the README documents the publishable CLI surface.
     assert "resume-ledger scan" in content
     assert "resume-ledger review" in content
+    assert "resume-ledger doctor" in content
     assert "resume-ledger report" in content
 
 

@@ -39,15 +39,17 @@ uv build
 ```bash
 resume-ledger scan resume.md --out claims.yml
 resume-ledger review claims.yml
+resume-ledger doctor claims.yml
 resume-ledger report claims.yml --out claim-review.md
 resume-ledger report claims.yml --out claim-review.md --strict
 resume-ledger advise claims.yml --out advice.md
 resume-ledger advise claims.yml --format json --out advice.json
 ```
 
-Use `report --strict` as a submission gate: unresolved claims exit non-zero so
-they can block a release or final resume handoff. Malformed ledger files are
-reported as warnings in the generated report, including `Malformed ledger`
+Use `doctor` as the quick submission gate: unresolved claims or malformed ledger
+warnings exit non-zero before a final resume handoff. Use `report --strict` when
+you also need to write the markdown review file as part of the same gate.
+Malformed ledger files are reported as warnings, including `Malformed ledger`
 messages, instead of editing the source file.
 
 ## Why This Exists
