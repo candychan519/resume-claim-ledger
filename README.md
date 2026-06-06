@@ -1,150 +1,111 @@
 # Resume Claim Ledger
 
-Track and verify resume claims, then suggest safer wording before submission.
-
-## Install
-
-Requires Python 3.13+ and [uv](https://docs.astral.sh/uv/).
-
-```bash
-uv tool install .
-```
-
-From GitHub:
-
-```bash
-uv tool install git+https://github.com/candychan519/resume-claim-ledger
-```
-
-After the first PyPI release:
-
-```bash
-uv tool install resume-claim-ledger
-```
-
-Release and publishing details live in [docs/releasing.md](docs/releasing.md).
-
-For local development:
-
-```bash
-uv sync --dev
-uv run pytest -q
-uv run ruff check .
-uv run basedpyright
-uv build
-```
-
-## Usage
-
-```bash
-resume-ledger scan resume.md --out claims.yml
-resume-ledger review claims.yml
-resume-ledger doctor claims.yml
-resume-ledger doctor claims.yml --policy policy/submission-policy.yml
-resume-ledger report claims.yml --out claim-review.md
-resume-ledger report claims.yml --out claim-review.md --strict
-resume-ledger advise claims.yml --out advice.md
-resume-ledger advise claims.yml --format json --out advice.json
-resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
-resume-ledger coordinate claims.yml --summary --out submission-summary.md
-resume-ledger coordinate claims.yml --summary --format json --out submission-summary.json
-resume-ledger coordinate claims.yml --format json --out submission-plan.json
-resume-ledger coordinate claims.yml --strict --out submission-plan.md
-```
-
-Use `doctor` as the quick submission gate: unresolved claims or malformed ledger
-warnings exit non-zero before a final resume handoff. Use `report --strict` when
-you also need to write the markdown review file as part of the same gate.
-Malformed ledger files are reported as warnings, including `Malformed ledger`
-messages, instead of editing the source file.
-
-## Recommended Workflow
-
-Start by turning a resume into a local claim ledger:
-
-```bash
-resume-ledger scan resume.md --out claims.yml
-```
-
-Start with `--summary` when you want a quick submission triage view:
-
-```bash
-resume-ledger coordinate claims.yml --summary --out submission-summary.md
-```
-
-Use the full submission plan when you have a job description and evidence files:
-
-```bash
-resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
-```
-
-Use JSON when another tool needs stable structured output:
-
-```bash
-resume-ledger coordinate claims.yml --format json --out submission-plan.json
-```
-
-Before a final handoff, run the submission gate:
-
-```bash
-resume-ledger doctor claims.yml
-resume-ledger doctor claims.yml --policy policy/submission-policy.yml
-```
-
-For agent-assisted work, use the default policy file and checklist in
-[policy/submission-policy.yml](policy/submission-policy.yml) and
-[docs/agent-guardrails.md](docs/agent-guardrails.md).
-
-Agents that support repository skills can use
-[$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md)
-for the end-to-end safe submission workflow, or
-[$evidence-triage](skills/evidence-triage/SKILL.md)
-when they only need to classify missing proof before editing.
+Evidence-bound resume submission coordinator for tracking claims, proof, JD fit, and submission readiness.
 
 ## Why This Exists
 
-AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resume Claim Ledger keeps a local evidence ledger so each resume bullet can be reviewed before submission. Advice is report-only: it can suggest safer wording, but it does not rewrite your source resume or ledger.
+AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resume Claim Ledger keeps each resume bullet tied to a local claim ledger so humans and agents can see what is verified, what needs proof, and what should be softened before submission.
 
-## Career Advice Mode
+## What It Does
 
-`advise` adds offline career/HR and Korean polish suggestions on top of the evidence ledger:
+- Turns resume bullets into a versioned claim ledger.
+- Flags unsupported, overbroad, malformed, or rewrite-needed claims.
+- Suggests safer wording without editing the source resume.
+- Builds a submission plan from claims, an optional job description, and optional evidence files.
+- Runs a policy-aware doctor gate before final handoff.
+- Provides agent guardrails and skills for safe resume coordination.
+
+## What It Does Not Do
+
+- Does not rewrite your source resume automatically.
+- Does not invent metrics, employers, dates, links, certifications, or scope.
+- Does not use AI scoring for JD matching.
+- Does not replace human evidence review or recruiter judgment.
+
+Report-only means outputs are suggestions and gates, not source-file edits.
+
+## Quickstart
+
+Create a local claim ledger:
 
 ```bash
-resume-ledger advise claims.yml --out advice.md
-resume-ledger advise claims.yml --out advice.md --no-polish-ko
-resume-ledger advise claims.yml --format json --out advice.json
+resume-ledger scan resume.md --out claims.yml
 ```
 
-- Career review flags claims that may read as overbroad or unclear to a recruiter.
-- Korean polish flags AI-sounding phrases such as `~를 통해` without rewriting the source resume.
-- Suggestions are report-only. They do not edit the ledger or resume file.
-- Evidence safety comes first: the tool does not invent metrics, dates, employers, or stronger claims.
+Get a compact submission triage view:
 
-Use `--polish-ko` to keep Korean polish enabled, or `--no-polish-ko` to produce only career/HR advice.
-Advice JSON uses a stable report-only schema; see [docs/ledger-schema.md](docs/ledger-schema.md).
+```bash
+resume-ledger coordinate claims.yml --summary --out submission-summary.md
+```
 
-## Coordinate Mode
-
-`coordinate` turns a claim ledger, optional job description, and optional evidence directory into a submission action plan:
+Build the full submission plan when you have a job description and evidence files:
 
 ```bash
 resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
-resume-ledger coordinate claims.yml --summary --out submission-summary.md
+```
+
+Run the final policy gate:
+
+```bash
+resume-ledger doctor claims.yml --policy policy/submission-policy.yml
+```
+
+Read the result as a handoff decision:
+
+- Status: Blocked means unresolved evidence, scope, rewrite, or malformed-ledger issues remain.
+- Status: Ready means the ledger passed the configured submission policy.
+
+## Typical Workflow
+
+1. Scan the resume into `claims.yml`.
+2. Review blocker counts with `review` or a compact `coordinate --summary` report.
+3. Attach evidence notes or evidence files for claims that need proof.
+4. Compare the ledger with the target JD using `coordinate`.
+5. Use `advise` or `report` for report-only wording and recruiter-readiness notes.
+6. Run `doctor` with `policy/submission-policy.yml` before calling the resume ready.
+
+## Agent Workflow
+
+Agents should start with compact JSON, then stop at the policy gate:
+
+```bash
 resume-ledger coordinate claims.yml --summary --format json --out submission-summary.json
+resume-ledger doctor claims.yml --policy policy/submission-policy.yml
+```
+
+Never call a resume submission-ready when the policy doctor fails. Use [docs/agent-guardrails.md](docs/agent-guardrails.md) and [policy/submission-policy.yml](policy/submission-policy.yml) as the source of truth for blocker handling.
+
+Agents that support repository skills can use:
+
+- [$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md) for the end-to-end safe submission workflow.
+- [$evidence-triage](skills/evidence-triage/SKILL.md) when they only need to classify missing proof before editing.
+
+## Commands
+
+| Command | Use when |
+| --- | --- |
+| `scan` | Create a claim ledger from resume bullets. |
+| `review` | Count claim statuses in a ledger. |
+| `report` | Write a Markdown claim review. |
+| `advise` | Produce report-only career and Korean polish suggestions. |
+| `coordinate` | Build a submission plan from claims, JD, and evidence. |
+| `doctor` | Fail the final gate when unsafe claims remain. |
+
+Common examples:
+
+```bash
+resume-ledger review claims.yml
+resume-ledger report claims.yml --out claim-review.md
+resume-ledger report claims.yml --out claim-review.md --strict
+resume-ledger advise claims.yml --polish-ko --out advice.md
+resume-ledger advise claims.yml --format json --out advice.json
 resume-ledger coordinate claims.yml --format json --out submission-plan.json
 resume-ledger coordinate claims.yml --strict --out submission-plan.md
 ```
 
-- Coordinate mode is report-only. It does not edit your resume, ledger, job description, or evidence files.
-- Job matching uses deterministic keyword matching, not AI scoring.
-- Evidence files are loaded from direct `.md` or `.txt` files in the evidence directory and shown by relative evidence IDs.
-- Use `--summary` for a compact summary that lists action counts and non-ready claims only.
-- Use `--summary --format json` when an agent needs a compact structured triage payload.
-- Use `--strict` to fail when malformed inputs or submission blockers remain after the plan is written.
+`doctor` is the quick submission gate. `report --strict` and `coordinate --strict` also fail when malformed inputs or submission blockers remain after writing their reports.
 
-Coordinate JSON uses a stable schema; see [docs/ledger-schema.md](docs/ledger-schema.md).
-
-## Sample
+## Example
 
 Input:
 
@@ -153,7 +114,7 @@ Input:
 - 배포 체크리스트를 도입했습니다. [evidence: release checklist]
 ```
 
-Output:
+Ledger:
 
 ```yaml
 schema_version: 1
@@ -172,4 +133,45 @@ claims:
     suggested_rewrite: ""
 ```
 
-For the full ledger, Advice JSON, and Coordinate JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).
+The first claim remains blocked until the scope is narrowed or evidence is attached. The second claim can pass because it has explicit evidence.
+
+## Install
+
+Requires Python 3.13+ and [uv](https://docs.astral.sh/uv/).
+
+From this repository:
+
+```bash
+uv tool install .
+```
+
+From GitHub:
+
+```bash
+uv tool install git+https://github.com/candychan519/resume-claim-ledger
+```
+
+After the first PyPI release:
+
+```bash
+uv tool install resume-claim-ledger
+```
+
+## Local Development
+
+```bash
+uv sync --dev
+uv run pytest -q
+uv run ruff check .
+uv run basedpyright
+uv build
+```
+
+## Docs
+
+| Document | Purpose |
+| --- | --- |
+| [docs/ledger-schema.md](docs/ledger-schema.md) | Ledger, Advice JSON, and Coordinate JSON schemas. |
+| [docs/agent-guardrails.md](docs/agent-guardrails.md) | Safe behavior for AI agents. |
+| [docs/releasing.md](docs/releasing.md) | Release and publishing process. |
+| [docs/maintenance.md](docs/maintenance.md) | Maintainer checks and deterministic rule guidance. |
