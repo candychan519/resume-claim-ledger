@@ -97,7 +97,9 @@ For agent-assisted work, use the default policy file and checklist in
 
 Agents that support repository skills can use
 [$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md)
-for the end-to-end safe submission workflow.
+for the end-to-end safe submission workflow, or
+[$evidence-triage](skills/evidence-triage/SKILL.md)
+when they only need to classify missing proof before editing.
 
 ## Why This Exists
 

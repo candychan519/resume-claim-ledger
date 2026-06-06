@@ -1,0 +1,9 @@
+dist cleaned
+2:name: evidence-triage
+8:Use this skill before rewriting resume claims. Only produce evidence requests, claim risk labels, and safe next actions.
+32:resume-ledger coordinate claims.yml --summary --format json --out submission-summary.json
+44:resume-ledger doctor claims.yml --policy policy/submission-policy.yml
+13:- Do not infer missing metrics, dates, employers, links, certifications, or usage scope.
+16:- Unknown evidence is not weak evidence; it is a blocker.
+4:  default_prompt: "Use $evidence-triage to classify missing proof before editing this resume."
+101:[$evidence-triage](skills/evidence-triage/SKILL.md)
