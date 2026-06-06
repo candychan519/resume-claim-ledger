@@ -143,6 +143,26 @@ def test_readme_documents_coordinate_summary_mode() -> None:
     assert "non-ready claims" in content
 
 
+def test_readme_documents_recommended_submission_workflow() -> None:
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    required = [
+        "## Recommended Workflow",
+        "resume-ledger scan resume.md --out claims.yml",
+        "resume-ledger coordinate claims.yml --summary --out submission-summary.md",
+        (
+            "resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence "
+            "--out submission-plan.md"
+        ),
+        "resume-ledger coordinate claims.yml --format json --out submission-plan.json",
+        "resume-ledger doctor claims.yml",
+        "Start with `--summary`",
+        "Use the full submission plan",
+    ]
+    for phrase in required:
+        assert phrase in content
+
+
 def test_maintenance_docs_describe_coordinate_summary_as_report_only() -> None:
     # Given: maintenance documentation.
     content = Path("docs/maintenance.md").read_text(encoding="utf-8")
