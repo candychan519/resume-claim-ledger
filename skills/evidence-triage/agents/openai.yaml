@@ -1,0 +1,7 @@
+interface:
+  display_name: "Evidence Triage"
+  short_description: "Classify resume evidence gaps safely"
+  default_prompt: "Use $evidence-triage to classify missing proof before editing this resume."
+
+policy:
+  allow_implicit_invocation: true
