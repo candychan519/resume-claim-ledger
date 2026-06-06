@@ -40,12 +40,14 @@ uv build
 resume-ledger scan resume.md --out claims.yml
 resume-ledger review claims.yml
 resume-ledger doctor claims.yml
+resume-ledger doctor claims.yml --policy policy/submission-policy.yml
 resume-ledger report claims.yml --out claim-review.md
 resume-ledger report claims.yml --out claim-review.md --strict
 resume-ledger advise claims.yml --out advice.md
 resume-ledger advise claims.yml --format json --out advice.json
 resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
 resume-ledger coordinate claims.yml --summary --out submission-summary.md
+resume-ledger coordinate claims.yml --summary --format json --out submission-summary.json
 resume-ledger coordinate claims.yml --format json --out submission-plan.json
 resume-ledger coordinate claims.yml --strict --out submission-plan.md
 ```
@@ -86,7 +88,12 @@ Before a final handoff, run the submission gate:
 
 ```bash
 resume-ledger doctor claims.yml
+resume-ledger doctor claims.yml --policy policy/submission-policy.yml
 ```
+
+For agent-assisted work, use the default policy file and checklist in
+[policy/submission-policy.yml](policy/submission-policy.yml) and
+[docs/agent-guardrails.md](docs/agent-guardrails.md).
 
 ## Why This Exists
 
@@ -117,6 +124,7 @@ Advice JSON uses a stable report-only schema; see [docs/ledger-schema.md](docs/l
 ```bash
 resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
 resume-ledger coordinate claims.yml --summary --out submission-summary.md
+resume-ledger coordinate claims.yml --summary --format json --out submission-summary.json
 resume-ledger coordinate claims.yml --format json --out submission-plan.json
 resume-ledger coordinate claims.yml --strict --out submission-plan.md
 ```
@@ -125,6 +133,7 @@ resume-ledger coordinate claims.yml --strict --out submission-plan.md
 - Job matching uses deterministic keyword matching, not AI scoring.
 - Evidence files are loaded from direct `.md` or `.txt` files in the evidence directory and shown by relative evidence IDs.
 - Use `--summary` for a compact summary that lists action counts and non-ready claims only.
+- Use `--summary --format json` when an agent needs a compact structured triage payload.
 - Use `--strict` to fail when malformed inputs or submission blockers remain after the plan is written.
 
 Coordinate JSON uses a stable schema; see [docs/ledger-schema.md](docs/ledger-schema.md).

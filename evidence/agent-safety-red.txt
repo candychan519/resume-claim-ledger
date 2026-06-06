@@ -1,0 +1,26 @@
+
+=================================== ERRORS ====================================
+______________ ERROR collecting tests/test_submission_policy.py _______________
+ImportError while importing test module 'C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_submission_policy.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_submission_policy.py:5: in <module>
+    from resume_claim_ledger.submission_policy import (
+E   ModuleNotFoundError: No module named 'resume_claim_ledger.submission_policy'
+_____________ ERROR collecting tests/test_coordinate_reporter.py ______________
+ImportError while importing test module 'C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_coordinate_reporter.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_coordinate_reporter.py:1: in <module>
+    from resume_claim_ledger.coordinate_reporter import (
+E   ImportError: cannot import name 'build_coordinate_summary_json' from 'resume_claim_ledger.coordinate_reporter' (C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\src\resume_claim_ledger\coordinate_reporter.py)
+=========================== short test summary info ===========================
+ERROR tests/test_submission_policy.py
+ERROR tests/test_coordinate_reporter.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!

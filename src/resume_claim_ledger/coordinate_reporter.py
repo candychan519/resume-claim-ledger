@@ -1,7 +1,14 @@
 import json
-from typing import Final
+from typing import Final, TypedDict
 
-from .models import CoordinateAction, CoordinateItem, SubmissionPlan, submission_plan_to_dict
+from .models import (
+    ClaimStatus,
+    CoordinateAction,
+    CoordinateItem,
+    RequirementMatch,
+    SubmissionPlan,
+    submission_plan_to_dict,
+)
 
 ACTION_ORDER: Final[tuple[CoordinateAction, ...]] = (
     "ready",
@@ -10,6 +17,31 @@ ACTION_ORDER: Final[tuple[CoordinateAction, ...]] = (
     "jd_gap",
     "submission_blocker",
 )
+
+
+class ActionCounts(TypedDict):
+    ready: int
+    needs_evidence: int
+    soften_wording: int
+    jd_gap: int
+    submission_blocker: int
+
+
+class CoordinateSummaryItemDict(TypedDict):
+    claim_id: str
+    action: CoordinateAction
+    evidence_status: ClaimStatus
+    requirement_match: RequirementMatch
+    matched_requirements: list[str]
+    matched_evidence: list[str]
+    next_step: str
+
+
+class CoordinateSummaryDict(TypedDict):
+    schema_version: int
+    counts: ActionCounts
+    warnings: list[str]
+    non_ready: list[CoordinateSummaryItemDict]
 
 
 def build_coordinate_markdown(plan: SubmissionPlan) -> str:
@@ -53,6 +85,40 @@ def build_coordinate_summary_markdown(plan: SubmissionPlan) -> str:
 
 def build_coordinate_json(plan: SubmissionPlan) -> str:
     return json.dumps(submission_plan_to_dict(plan), ensure_ascii=False, indent=2) + "\n"
+
+
+def build_coordinate_summary_json(plan: SubmissionPlan) -> str:
+    payload: CoordinateSummaryDict = {
+        "schema_version": plan.schema_version,
+        "counts": _summary_counts(plan),
+        "warnings": list(plan.warnings),
+        "non_ready": [
+            _summary_item_to_dict(item) for item in plan.items if item.action != "ready"
+        ],
+    }
+    return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+
+
+def _summary_counts(plan: SubmissionPlan) -> ActionCounts:
+    return {
+        "ready": _count_action(plan, "ready"),
+        "needs_evidence": _count_action(plan, "needs_evidence"),
+        "soften_wording": _count_action(plan, "soften_wording"),
+        "jd_gap": _count_action(plan, "jd_gap"),
+        "submission_blocker": _count_action(plan, "submission_blocker"),
+    }
+
+
+def _summary_item_to_dict(item: CoordinateItem) -> CoordinateSummaryItemDict:
+    return {
+        "claim_id": item.claim_id,
+        "action": item.action,
+        "evidence_status": item.evidence_status,
+        "requirement_match": item.requirement_match,
+        "matched_requirements": list(item.matched_requirements),
+        "matched_evidence": list(item.matched_evidence),
+        "next_step": item.next_step,
+    }
 
 
 def _summary_lines(plan: SubmissionPlan) -> list[str]:

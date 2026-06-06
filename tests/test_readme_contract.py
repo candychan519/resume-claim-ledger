@@ -163,6 +163,47 @@ def test_readme_documents_recommended_submission_workflow() -> None:
         assert phrase in content
 
 
+def test_readme_links_agent_guardrails_and_submission_policy() -> None:
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    assert "docs/agent-guardrails.md" in content
+    assert "policy/submission-policy.yml" in content
+    assert "resume-ledger doctor claims.yml --policy policy/submission-policy.yml" in content
+
+
+def test_agent_guardrails_doc_defines_safe_agent_workflow() -> None:
+    content = Path("docs/agent-guardrails.md").read_text(encoding="utf-8")
+
+    required = [
+        "Never invent metrics, employers, dates, certifications, links, or usage scope.",
+        "Do not edit the source resume directly.",
+        "resume-ledger coordinate claims.yml --summary --format json",
+        "resume-ledger doctor claims.yml --policy policy/submission-policy.yml",
+        "Stop and ask for evidence",
+    ]
+    for phrase in required:
+        assert phrase in content
+
+
+def test_default_submission_policy_blocks_unsafe_claim_states() -> None:
+    content = Path("policy/submission-policy.yml").read_text(encoding="utf-8")
+
+    required = [
+        "allow_auto_edit_resume: false",
+        "require_doctor_pass: true",
+        "- malformed_ledger",
+        "- needs_evidence",
+        "- too_broad",
+        "- rewrite_needed",
+        "- add_metric",
+        "- add_employer",
+        "- add_date",
+        "- strengthen_scope",
+    ]
+    for phrase in required:
+        assert phrase in content
+
+
 def test_maintenance_docs_describe_coordinate_summary_as_report_only() -> None:
     # Given: maintenance documentation.
     content = Path("docs/maintenance.md").read_text(encoding="utf-8")

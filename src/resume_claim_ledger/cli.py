@@ -1,39 +1,37 @@
-import json
 from pathlib import Path
-from typing import Annotated, Literal, TypedDict
+from typing import Annotated, Literal
 
 import typer
 from rich.console import Console
 from rich.table import Table
 
-from .career_advisor import advise_career
+from .advice_reporter import AdviceFormat, build_advice_output, collect_suggestions
 from .coordinate_reporter import (
     build_coordinate_json,
     build_coordinate_markdown,
+    build_coordinate_summary_json,
     build_coordinate_summary_markdown,
 )
 from .coordinator import coordinate_submission
 from .evidence_catalog import load_evidence_catalog
 from .job_parser import extract_job_requirements
-from .korean_polish import advise_korean_polish
-from .ledger_io import read_ledger, read_ledger_result, write_ledger
-from .models import Claim, ClaimStatus, Suggestion, SuggestionDict, suggestion_to_dict
+from .ledger_io import LedgerReadResult, read_ledger, read_ledger_result, write_ledger
+from .models import ClaimStatus
 from .reporter import build_report
 from .reviewer import summarize_statuses
 from .scanner import extract_claims
+from .submission_policy import (
+    PolicyParseError,
+    doctor_policy_violations,
+    read_submission_policy,
+)
 
-AdviceFormat = Literal["markdown", "json"]
 CoordinateFormat = Literal["markdown", "json"]
 UNRESOLVED_STATUSES: tuple[ClaimStatus, ...] = (
     "needs_evidence",
     "too_broad",
     "rewrite_needed",
 )
-
-
-class AdvicePayload(TypedDict):
-    schema_version: int
-    suggestions: list[SuggestionDict]
 
 
 app = typer.Typer(help="Track and review resume claims against evidence.")
@@ -71,9 +69,17 @@ def review(
 @app.command()
 def doctor(
     ledger: Annotated[Path, typer.Argument(help="Claim ledger YAML file.")],
+    *,
+    policy: Annotated[
+        Path | None,
+        typer.Option("--policy", help="Optional submission policy YAML file."),
+    ] = None,
 ) -> None:
     if not ledger.exists():
         error_console.print(f"Ledger file does not exist: {ledger}")
+        raise typer.Exit(1)
+    if policy is not None and not policy.exists():
+        error_console.print(f"Policy file does not exist: {policy}")
         raise typer.Exit(1)
 
     result = read_ledger_result(ledger)
@@ -91,7 +97,10 @@ def doctor(
         error_console.print(f"Doctor found ledger warnings: {', '.join(result.warnings)}")
     if unresolved != []:
         error_console.print(f"Doctor found unresolved claims: {', '.join(unresolved)}")
-    if result.warnings != [] or unresolved != []:
+    has_failure = result.warnings != [] or unresolved != []
+    if policy is not None:
+        has_failure = _run_policy_doctor(policy, result) or has_failure
+    if has_failure:
         raise typer.Exit(1)
 
     console.print("Ready for submission.")
@@ -145,7 +154,7 @@ def coordinate(  # noqa: PLR0913
     ] = False,
     summary: Annotated[
         bool,
-        typer.Option("--summary", help="Write compact Markdown summary output."),
+        typer.Option("--summary", help="Write compact summary output."),
     ] = False,
 ) -> None:
     if not ledger.exists():
@@ -173,7 +182,9 @@ def coordinate(  # noqa: PLR0913
                 else build_coordinate_markdown(plan)
             )
         case "json":
-            content = build_coordinate_json(plan)
+            content = (
+                build_coordinate_summary_json(plan) if summary else build_coordinate_json(plan)
+            )
 
     _ = out.write_text(content, encoding="utf-8")
     console.print(f"Wrote submission plan to {out}")
@@ -207,13 +218,8 @@ def advise(  # noqa: PLR0913
     ] = False,
 ) -> None:
     result = read_ledger_result(ledger)
-    suggestions = _collect_suggestions(result.claims, career=career, polish_ko=polish_ko)
-    match output_format:
-        case "markdown":
-            content = _build_advice_markdown(result.claims, result.warnings, suggestions)
-        case "json":
-            content = _build_advice_json(suggestions)
-
+    suggestions = collect_suggestions(result.claims, career=career, polish_ko=polish_ko)
+    content = build_advice_output(result.claims, result.warnings, suggestions, output_format)
     _ = out.write_text(content, encoding="utf-8")
     console.print(f"Wrote advice to {out}")
 
@@ -223,36 +229,18 @@ def advise(  # noqa: PLR0913
         raise typer.Exit(1)
 
 
-def _collect_suggestions(
-    claims: list[Claim],
-    *,
-    career: bool,
-    polish_ko: bool,
-) -> list[Suggestion]:
-    suggestions: list[Suggestion] = []
-    if career:
-        suggestions.extend(advise_career(claims))
-    if polish_ko:
-        suggestions.extend(advise_korean_polish(claims))
-    return suggestions
+def _run_policy_doctor(policy: Path, result: LedgerReadResult) -> bool:
+    try:
+        submission_policy = read_submission_policy(policy)
+    except PolicyParseError as error:
+        error_console.print(f"Policy parse failed: {error}")
+        raise typer.Exit(1) from error
+    policy_violations = doctor_policy_violations(result, submission_policy)
+    if policy_violations == ():
+        console.print("Policy checks passed.")
+        return False
 
-
-def _build_advice_markdown(
-    claims: list[Claim],
-    warnings: list[str],
-    suggestions: list[Suggestion],
-) -> str:
-    if suggestions == []:
-        lines = ["# Claim Advice", "", "No career or Korean polish suggestions found."]
-        if warnings != []:
-            lines.extend(["", "## Warnings", "", *[f"- {warning}" for warning in warnings]])
-        return "\n".join(lines) + "\n"
-    return build_report(claims, warnings=warnings, suggestions=suggestions)
-
-
-def _build_advice_json(suggestions: list[Suggestion]) -> str:
-    payload: AdvicePayload = {
-        "schema_version": 1,
-        "suggestions": [suggestion_to_dict(suggestion) for suggestion in suggestions],
-    }
-    return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    error_console.print("Policy blocked submission:")
+    for violation in policy_violations:
+        error_console.print(f"- {violation}")
+    return True

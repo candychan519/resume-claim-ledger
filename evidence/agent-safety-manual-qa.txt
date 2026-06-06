@@ -1,0 +1,12 @@
+Wrote submission plan to
+C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tmp\agent-safety-qa-wo
+rk\summary.json
+  "counts": {
+  "non_ready": [
+      "claim_id": "CLM-002",
+Policy blocked submission:
+- too_broad: 1
+Policy checks passed.
+Ready for submission.
+Policy file does not exist:
+agent-safety QA PASS

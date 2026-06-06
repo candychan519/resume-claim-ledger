@@ -1,0 +1,13 @@
+submission_policy:
+  allow_auto_edit_resume: false
+  require_doctor_pass: true
+  block_on:
+    - malformed_ledger
+    - needs_evidence
+    - too_broad
+    - rewrite_needed
+  forbidden_claim_changes:
+    - add_metric
+    - add_employer
+    - add_date
+    - strengthen_scope
