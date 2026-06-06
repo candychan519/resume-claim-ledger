@@ -115,6 +115,58 @@ def test_coordinate_json_outputs_stable_contract(tmp_path: Path) -> None:
     assert '"action": "needs_evidence"' in content
 
 
+def test_coordinate_summary_json_outputs_compact_triage_contract(tmp_path: Path) -> None:
+    # Given: a ledger with one ready claim and one non-ready claim.
+    ledger = tmp_path / "claims.yml"
+    out = tmp_path / "submission-summary.json"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "배포 체크리스트를 정리했습니다."',
+                "    category: execution",
+                "    status: verified",
+                '    evidence_note: "release checklist"',
+                '    suggested_rewrite: ""',
+                "  - claim_id: CLM-002",
+                '    text: "대규모 사용자를 대상으로 안정적인 시스템을 구축했습니다."',
+                "    category: impact",
+                "    status: too_broad",
+                '    evidence_note: "근거 필요"',
+                '    suggested_rewrite: "시스템 구축 작업에 참여했습니다."',
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: coordinate writes compact JSON summary through the CLI.
+    result = run_cli(
+        [
+            "run",
+            "resume-ledger",
+            "coordinate",
+            str(ledger),
+            "--summary",
+            "--format",
+            "json",
+            "--out",
+            str(out),
+        ],
+    )
+
+    # Then: the JSON omits full source text and ready-claim detail.
+    content = out.read_text(encoding="utf-8")
+    assert result.returncode == 0
+    assert '"counts": {' in content
+    assert '"non_ready": [' in content
+    assert '"claim_id": "CLM-002"' in content
+    assert '"claim_id": "CLM-001"' not in content
+    assert '"source_text"' not in content
+    assert '"items"' not in content
+
+
 def test_coordinate_when_job_is_omitted_still_writes_evidence_plan(tmp_path: Path) -> None:
     # Given: a claim ledger and evidence directory without a job description.
     ledger = tmp_path / "claims.yml"

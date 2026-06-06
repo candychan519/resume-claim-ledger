@@ -38,3 +38,7 @@ Coordinate rules are deterministic and offline. Keep them submission-focused:
 - Do not expose absolute local paths in Coordinate JSON or Markdown output.
 - Keep summary mode report-only; it should show action counts and non-ready claims without expanding ready claim details.
 - Add a failing CLI test before changing `coordinate` behavior, including one adjacent regression check for `advise`, `doctor`, or `report`.
+
+## Agent Guardrails
+
+Keep the default policy in `policy/submission-policy.yml` conservative. Agent-facing workflows should run `resume-ledger doctor claims.yml --policy policy/submission-policy.yml` before handoff and should treat any policy violation as a submission blocker.

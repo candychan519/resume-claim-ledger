@@ -69,3 +69,18 @@ def test_docs_define_coordinate_json_contract() -> None:
     ]
     for field in required:
         assert field in content
+
+
+def test_docs_define_coordinate_summary_json_contract() -> None:
+    content = Path("docs/ledger-schema.md").read_text(encoding="utf-8")
+
+    required = [
+        "Coordinate Summary JSON",
+        "coordinate --summary --format json",
+        "counts",
+        "non_ready",
+        "source_text",
+        "intentionally omitted",
+    ]
+    for field in required:
+        assert field in content

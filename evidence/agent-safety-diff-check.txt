@@ -1,0 +1,10 @@
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/ledger-schema.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/maintenance.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/resume_claim_ledger/cli.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/resume_claim_ledger/coordinate_reporter.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_cli_coordinate.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_cli_e2e.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_coordinate_reporter.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_ledger_schema_docs.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_readme_contract.py', LF will be replaced by CRLF the next time Git touches it

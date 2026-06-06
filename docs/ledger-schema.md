@@ -102,3 +102,39 @@ Coordinate JSON uses:
 - `matched_evidence`: list of matched evidence IDs. Absolute local paths are not exposed.
 - `next_step`: conservative next action that must not invent facts.
 - `warnings`: malformed input or parse warnings surfaced during coordination.
+
+## Coordinate Summary JSON
+
+`coordinate --summary --format json` writes a compact triage contract for agents and
+automation. It omits `source_text` and ready-claim details so downstream tools can
+focus on blockers without copying full resume claims.
+
+```json
+{
+  "schema_version": 1,
+  "counts": {
+    "ready": 1,
+    "needs_evidence": 0,
+    "soften_wording": 0,
+    "jd_gap": 0,
+    "submission_blocker": 1
+  },
+  "warnings": [],
+  "non_ready": [
+    {
+      "claim_id": "CLM-002",
+      "action": "submission_blocker",
+      "evidence_status": "too_broad",
+      "requirement_match": "not_evaluated",
+      "matched_requirements": [],
+      "matched_evidence": [],
+      "next_step": "Add evidence or soften the claim before submission."
+    }
+  ]
+}
+```
+
+- `counts`: action totals for the whole submission plan.
+- `warnings`: malformed input or parse warnings surfaced during coordination.
+- `non_ready`: only claims whose action is not `ready`.
+- `source_text`: intentionally omitted from summary JSON.

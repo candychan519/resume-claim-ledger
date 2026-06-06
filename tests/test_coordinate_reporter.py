@@ -1,6 +1,7 @@
 from resume_claim_ledger.coordinate_reporter import (
     build_coordinate_json,
     build_coordinate_markdown,
+    build_coordinate_summary_json,
     build_coordinate_summary_markdown,
 )
 from resume_claim_ledger.models import CoordinateItem, SubmissionPlan
@@ -116,3 +117,38 @@ def test_build_coordinate_summary_markdown_lists_counts_and_non_ready_items_only
     assert "### CLM-002" in markdown
     assert "### CLM-001" not in markdown
     assert "C:/" not in markdown
+
+
+def test_build_coordinate_summary_json_lists_counts_and_non_ready_items_only() -> None:
+    ready = CoordinateItem(
+        claim_id="CLM-001",
+        source_text="Python MLOps 배포 체크리스트를 정리했습니다.",
+        action="ready",
+        evidence_status="verified",
+        requirement_match="direct_keyword_match",
+        matched_requirements=("REQ-001",),
+        matched_evidence=("EVD-001",),
+        next_step="제출 가능 상태입니다.",
+    )
+    blocker = CoordinateItem(
+        claim_id="CLM-002",
+        source_text="대규모 사용자를 대상으로 안정적인 시스템을 구축했습니다.",
+        action="submission_blocker",
+        evidence_status="too_broad",
+        requirement_match="direct_keyword_match",
+        matched_requirements=("REQ-002",),
+        matched_evidence=(),
+        next_step="근거를 추가하거나 제출 전 표현을 완화하세요.",
+    )
+    plan = SubmissionPlan(schema_version=1, items=(ready, blocker), warnings=("Malformed ledger",))
+
+    content = build_coordinate_summary_json(plan)
+
+    assert '"schema_version": 1' in content
+    assert '"counts": {' in content
+    assert '"submission_blocker": 1' in content
+    assert '"non_ready": [' in content
+    assert '"claim_id": "CLM-002"' in content
+    assert '"claim_id": "CLM-001"' not in content
+    assert '"source_text"' not in content
+    assert "C:/" not in content
