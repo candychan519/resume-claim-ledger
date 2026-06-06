@@ -56,6 +56,38 @@ you also need to write the markdown review file as part of the same gate.
 Malformed ledger files are reported as warnings, including `Malformed ledger`
 messages, instead of editing the source file.
 
+## Recommended Workflow
+
+Start by turning a resume into a local claim ledger:
+
+```bash
+resume-ledger scan resume.md --out claims.yml
+```
+
+Start with `--summary` when you want a quick submission triage view:
+
+```bash
+resume-ledger coordinate claims.yml --summary --out submission-summary.md
+```
+
+Use the full submission plan when you have a job description and evidence files:
+
+```bash
+resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
+```
+
+Use JSON when another tool needs stable structured output:
+
+```bash
+resume-ledger coordinate claims.yml --format json --out submission-plan.json
+```
+
+Before a final handoff, run the submission gate:
+
+```bash
+resume-ledger doctor claims.yml
+```
+
 ## Why This Exists
 
 AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resume Claim Ledger keeps a local evidence ledger so each resume bullet can be reviewed before submission. Advice is report-only: it can suggest safer wording, but it does not rewrite your source resume or ledger.
