@@ -44,6 +44,10 @@ resume-ledger report claims.yml --out claim-review.md
 resume-ledger report claims.yml --out claim-review.md --strict
 resume-ledger advise claims.yml --out advice.md
 resume-ledger advise claims.yml --format json --out advice.json
+resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
+resume-ledger coordinate claims.yml --summary --out submission-summary.md
+resume-ledger coordinate claims.yml --format json --out submission-plan.json
+resume-ledger coordinate claims.yml --strict --out submission-plan.md
 ```
 
 Use `doctor` as the quick submission gate: unresolved claims or malformed ledger
@@ -74,6 +78,25 @@ resume-ledger advise claims.yml --format json --out advice.json
 Use `--polish-ko` to keep Korean polish enabled, or `--no-polish-ko` to produce only career/HR advice.
 Advice JSON uses a stable report-only schema; see [docs/ledger-schema.md](docs/ledger-schema.md).
 
+## Coordinate Mode
+
+`coordinate` turns a claim ledger, optional job description, and optional evidence directory into a submission action plan:
+
+```bash
+resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
+resume-ledger coordinate claims.yml --summary --out submission-summary.md
+resume-ledger coordinate claims.yml --format json --out submission-plan.json
+resume-ledger coordinate claims.yml --strict --out submission-plan.md
+```
+
+- Coordinate mode is report-only. It does not edit your resume, ledger, job description, or evidence files.
+- Job matching uses deterministic keyword matching, not AI scoring.
+- Evidence files are loaded from direct `.md` or `.txt` files in the evidence directory and shown by relative evidence IDs.
+- Use `--summary` for a compact summary that lists action counts and non-ready claims only.
+- Use `--strict` to fail when malformed inputs or submission blockers remain after the plan is written.
+
+Coordinate JSON uses a stable schema; see [docs/ledger-schema.md](docs/ledger-schema.md).
+
 ## Sample
 
 Input:
@@ -102,4 +125,4 @@ claims:
     suggested_rewrite: ""
 ```
 
-For the full ledger and Advice JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).
+For the full ledger, Advice JSON, and Coordinate JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).

@@ -1,0 +1,135 @@
+# Follow-up Task 2 dogfood run
+resume=/c/Users/wjfeo/dev/career/01_resume/current/20260531_권찬민_이력서_v1.4_MASTER_최근3축반영본.md
+job=/c/Users/wjfeo/dev/career/03_applications/20251201_naver-cloud/네이버클라우드채용공고.txt
+evidence_dir=/c/Users/wjfeo/dev/career/02_career-assets/portfolio-ppt-sourcepack/04_evidence
+## source hashes before
+674d79402b471354bdf4708b70a17a5b15befbac3fd96659d7dc969ef4f7972f */c/Users/wjfeo/dev/career/01_resume/current/20260531_권찬민_이력서_v1.4_MASTER_최근3축반영본.md
+5cc158bcfe8ee4a646f2826a86bf4c258571fa2ddad51dca14058a8720e19ebe */c/Users/wjfeo/dev/career/03_applications/20251201_naver-cloud/네이버클라우드채용공고.txt
+## scan
+Wrote 52 claims to evidence\dogfood\current-resume-claims.yml
+## coordinate
+Wrote submission plan to evidence\dogfood\naver-cloud-submission-plan.md
+## source hashes after
+674d79402b471354bdf4708b70a17a5b15befbac3fd96659d7dc969ef4f7972f */c/Users/wjfeo/dev/career/01_resume/current/20260531_권찬민_이력서_v1.4_MASTER_최근3축반영본.md
+5cc158bcfe8ee4a646f2826a86bf4c258571fa2ddad51dca14058a8720e19ebe */c/Users/wjfeo/dev/career/03_applications/20251201_naver-cloud/네이버클라우드채용공고.txt
+## artifact heads
+schema_version: 1
+claims:
+  - claim_id: CLM-001
+    text: "AI/MLOps Platform: MLflow, Model Registry, Model Serving, Jupyter Workspace, AI Pipeline, Monitoring"
+    category: execution
+    status: needs_evidence
+    evidence_note: "구체적인 근거, 지표, 산출물 링크 중 하나가 필요합니다."
+    suggested_rewrite: ""
+  - claim_id: CLM-002
+    text: "AX & Developer Productivity: Claude Code, Codex Agent Workflow, DevSpec, Scorer, Rubric, MCP, Playwright"
+    category: execution
+    status: needs_evidence
+    evidence_note: "구체적인 근거, 지표, 산출물 링크 중 하나가 필요합니다."
+    suggested_rewrite: ""
+  - claim_id: CLM-003
+    text: "Platform Engineering: Kubernetes, Docker, Hadoop, Hive, NFS, LDAP, DNS, Nginx, Container Registry"
+    category: execution
+    status: needs_evidence
+    evidence_note: "구체적인 근거, 지표, 산출물 링크 중 하나가 필요합니다."
+    suggested_rewrite: ""
+  - claim_id: CLM-004
+    text: "DevOps & Automation: GitLab CI/CD, GitLab Schedule, Multi-Project Pipeline, Child Pipeline, Ansible, Terraform"
+    category: execution
+    status: needs_evidence
+    evidence_note: "구체적인 근거, 지표, 산출물 링크 중 하나가 필요합니다."
+    suggested_rewrite: ""
+  - claim_id: CLM-005
+    text: "Operations & Security: MariaDB, Oracle DB, Apache Ranger, ELK Stack, Security Remediation, Data Migration"
+    category: execution
+    status: needs_evidence
+    evidence_note: "구체적인 근거, 지표, 산출물 링크 중 하나가 필요합니다."
+    suggested_rewrite: ""
+  - claim_id: CLM-006
+    text: "Cloud & Virtualization: Samsung Cloud Platform, AWS, NCP, Hyper-V, oVirt, XCP-ng"
+    category: execution
+    status: needs_evidence
+    evidence_note: "구체적인 근거, 지표, 산출물 링크 중 하나가 필요합니다."
+    suggested_rewrite: ""
+  - claim_id: CLM-007
+    text: "모니모 원앱 MLOps 프로젝트에서 SmartAI/MLOps 기능 검증과 납품 패키징, 운영 설계 보강 범위에 참여하고 Workspace, AI Pipeline, Model Registry, Model Serving, Monitoring 흐름을 검증·정리했습니다."
+# Submission Plan
+
+## Summary
+
+- ready: 0
+- needs_evidence: 51
+- soften_wording: 0
+- jd_gap: 0
+- submission_blocker: 1
+
+## Actions
+
+### CLM-001
+
+- source: AI/MLOps Platform: MLflow, Model Registry, Model Serving, Jupyter Workspace, AI Pipeline, Monitoring
+- action: needs_evidence
+- evidence_status: needs_evidence
+- jd_match: direct_keyword_match
+- requirements: REQ-003, REQ-004, REQ-005
+- evidence: (none)
+- next_step: 근거 파일을 연결하세요.
+
+### CLM-002
+
+- source: AX & Developer Productivity: Claude Code, Codex Agent Workflow, DevSpec, Scorer, Rubric, MCP, Playwright
+- action: needs_evidence
+- evidence_status: needs_evidence
+- jd_match: no_match
+- requirements: (none)
+- evidence: (none)
+- next_step: 근거 파일을 연결하세요.
+
+### CLM-003
+
+- source: Platform Engineering: Kubernetes, Docker, Hadoop, Hive, NFS, LDAP, DNS, Nginx, Container Registry
+- action: needs_evidence
+- evidence_status: needs_evidence
+- jd_match: direct_keyword_match
+- requirements: REQ-003, REQ-004, REQ-005, REQ-007
+- evidence: (none)
+- next_step: 근거 파일을 연결하세요.
+
+### CLM-004
+
+- source: DevOps & Automation: GitLab CI/CD, GitLab Schedule, Multi-Project Pipeline, Child Pipeline, Ansible, Terraform
+- action: needs_evidence
+- evidence_status: needs_evidence
+- jd_match: no_match
+- requirements: (none)
+- evidence: (none)
+- next_step: 근거 파일을 연결하세요.
+
+### CLM-005
+
+- source: Operations & Security: MariaDB, Oracle DB, Apache Ranger, ELK Stack, Security Remediation, Data Migration
+- action: needs_evidence
+- evidence_status: needs_evidence
+- jd_match: no_match
+- requirements: (none)
+- evidence: (none)
+- next_step: 근거 파일을 연결하세요.
+
+### CLM-006
+
+- source: Cloud & Virtualization: Samsung Cloud Platform, AWS, NCP, Hyper-V, oVirt, XCP-ng
+- action: needs_evidence
+- evidence_status: needs_evidence
+- jd_match: direct_keyword_match
+- requirements: REQ-003, REQ-004, REQ-005
+- evidence: (none)
+- next_step: 근거 파일을 연결하세요.
+
+### CLM-007
+
+- source: 모니모 원앱 MLOps 프로젝트에서 SmartAI/MLOps 기능 검증과 납품 패키징, 운영 설계 보강 범위에 참여하고 Workspace, AI Pipeline, Model Registry, Model Serving, Monitoring 흐름을 검증·정리했습니다.
+- action: needs_evidence
+- evidence_status: needs_evidence
+- jd_match: direct_keyword_match
+- requirements: REQ-001, REQ-003, REQ-005, REQ-012, REQ-015, REQ-016, REQ-017
+- evidence: (none)

@@ -1,0 +1,83 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+_ test_extract_job_requirements_marks_preferred_requirements_heading_as_optional _
+
+    def test_extract_job_requirements_marks_preferred_requirements_heading_as_optional() -> None:
+        # Given: a preferred heading that also contains the word requirements.
+        job_text = "## Preferred Requirements\n- Kubernetes 운영"
+    
+        # When: requirements are extracted.
+        requirements = extract_job_requirements(job_text)
+    
+        # Then: the preferred section remains optional.
+>       assert [(item.requirement_id, item.required, item.text) for item in requirements] == [
+            ("REQ-001", False, "Kubernetes 운영"),
+        ]
+E       AssertionError: assert [('REQ-001', ...bernetes 운영')] == [('REQ-001', ...bernetes 운영')]
+E         
+E         At index 0 diff: ('REQ-001', True, 'Kubernetes 운영') != ('REQ-001', False, 'Kubernetes 운영')
+E         Use -v to get more diff
+
+tests\test_job_parser.py:62: AssertionError
+____ test_load_evidence_catalog_prefers_markdown_heading_over_leading_body ____
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-38/test_load_evidence_catalog_pre0')
+
+    def test_load_evidence_catalog_prefers_markdown_heading_over_leading_body(
+        tmp_path: Path,
+    ) -> None:
+        # Given: evidence content with body text before its first heading.
+        evidence_dir = tmp_path / "evidence"
+        evidence_dir.mkdir()
+        _ = (evidence_dir / "notes.md").write_text(
+            "Internal note\n# Public Summary\nEvidence details\n",
+            encoding="utf-8",
+        )
+    
+        # When: the evidence catalog is loaded.
+        items = load_evidence_catalog(evidence_dir)
+    
+        # Then: the first Markdown heading is used before falling back to body text.
+>       assert items[0].summary == "Public Summary"
+E       AssertionError: assert 'Internal note' == 'Public Summary'
+E         
+E         - Public Summary
+E         + Internal note
+
+tests\test_evidence_catalog.py:75: AssertionError
+_ test_coordinate_submission_marks_verified_claim_as_jd_gap_when_only_preferred_matches _
+
+    def test_coordinate_submission_marks_verified_claim_as_jd_gap_when_only_preferred_matches(
+    ) -> None:
+        # Given: a verified claim that matches a preferred requirement but not a required one.
+        claims = [
+            Claim(
+                claim_id="CLM-005",
+                text="Kubernetes 운영 자동화를 정리했습니다.",
+                category="execution",
+                status="verified",
+                evidence_note="automation note",
+                suggested_rewrite="",
+            ),
+        ]
+        requirements = [
+            JobRequirement("REQ-001", "Python MLOps 운영", ("Python", "MLOps"), required=True),
+            JobRequirement("REQ-002", "Kubernetes 운영", ("Kubernetes", "운영"), required=False),
+        ]
+        evidence = [EvidenceItem("EVD-001", "automation.md", "automation note")]
+    
+        # When: a submission plan is coordinated.
+        plan = coordinate_submission(claims, requirements, evidence, [])
+    
+        # Then: preferred-only matching does not satisfy the required JD coverage gate.
+>       assert plan.items[0].action == "jd_gap"
+E       AssertionError: assert 'ready' == 'jd_gap'
+E         
+E         - jd_gap
+E         + ready
+
+tests\test_coordinator.py:123: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_job_parser.py::test_extract_job_requirements_marks_preferred_requirements_heading_as_optional
+FAILED tests/test_evidence_catalog.py::test_load_evidence_catalog_prefers_markdown_heading_over_leading_body
+FAILED tests/test_coordinator.py::test_coordinate_submission_marks_verified_claim_as_jd_gap_when_only_preferred_matches

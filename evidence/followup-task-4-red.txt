@@ -1,0 +1,29 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+________________ test_readme_documents_coordinate_summary_mode ________________
+
+    def test_readme_documents_coordinate_summary_mode() -> None:
+        # Given: the project README.
+        content = Path("README.md").read_text(encoding="utf-8")
+    
+        # When: coordinate summary guidance is inspected.
+        # Then: users can find the compact triage output command and purpose.
+>       assert "resume-ledger coordinate claims.yml --summary --out submission-summary.md" in content
+E       AssertionError: assert 'resume-ledger coordinate claims.yml --summary --out submission-summary.md' in '# Resume Claim Ledger\n\nTrack and verify resume claims, then suggest safer wording before submission.\n\n## Install\...n\nFor the full ledger, Advice JSON, and Coordinate JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).\n'
+
+tests\test_readme_contract.py:141: AssertionError
+______ test_maintenance_docs_describe_coordinate_summary_as_report_only _______
+
+    def test_maintenance_docs_describe_coordinate_summary_as_report_only() -> None:
+        # Given: maintenance documentation.
+        content = Path("docs/maintenance.md").read_text(encoding="utf-8")
+    
+        # When: coordinate maintenance rules are inspected.
+        # Then: summary mode is held to the same report-only contract.
+>       assert "summary mode" in content
+E       AssertionError: assert 'summary mode' in '# Maintenance\n\n## Routine Checks\n\nRun the local gate before merging:\n\n```bash\nuv run pytest -q\nuv run ruff ch... before changing `coordinate` behavior, including one adjacent regression check for `advise`, `doctor`, or `report`.\n'
+
+tests\test_readme_contract.py:152: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_readme_contract.py::test_readme_documents_coordinate_summary_mode
+FAILED tests/test_readme_contract.py::test_maintenance_docs_describe_coordinate_summary_as_report_only

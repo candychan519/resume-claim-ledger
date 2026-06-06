@@ -103,3 +103,52 @@ def test_readme_documents_advice_json_schema_or_schema_doc_link() -> None:
     assert "--format json" in content
     assert "Advice JSON" in content
     assert "docs/ledger-schema.md" in content
+
+
+def test_readme_documents_coordinate_command() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: coordinate usage guidance is inspected.
+    # Then: users can find Markdown, JSON, and strict coordinate examples.
+    markdown_command = (
+        "resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence "
+        "--out submission-plan.md"
+    )
+    assert markdown_command in content
+    assert "resume-ledger coordinate claims.yml --format json --out submission-plan.json" in content
+    assert "resume-ledger coordinate claims.yml --strict --out submission-plan.md" in content
+
+
+def test_readme_describes_coordinate_as_report_only_and_deterministic() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: the coordinate product promise is inspected.
+    # Then: it avoids implying automatic rewriting or AI scoring.
+    assert "Coordinate mode is report-only" in content
+    assert "does not edit your resume, ledger, job description, or evidence files" in content
+    assert "deterministic keyword matching" in content
+    assert "not AI scoring" in content
+
+
+def test_readme_documents_coordinate_summary_mode() -> None:
+    # Given: the project README.
+    content = Path("README.md").read_text(encoding="utf-8")
+
+    # When: coordinate summary guidance is inspected.
+    # Then: users can find the compact triage output command and purpose.
+    assert "resume-ledger coordinate claims.yml --summary --out submission-summary.md" in content
+    assert "compact summary" in content
+    assert "non-ready claims" in content
+
+
+def test_maintenance_docs_describe_coordinate_summary_as_report_only() -> None:
+    # Given: maintenance documentation.
+    content = Path("docs/maintenance.md").read_text(encoding="utf-8")
+
+    # When: coordinate maintenance rules are inspected.
+    # Then: summary mode is held to the same report-only contract.
+    assert "summary mode" in content
+    assert "non-ready claims" in content
+    assert "report-only" in content

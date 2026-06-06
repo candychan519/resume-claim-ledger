@@ -1,0 +1,13 @@
+# Follow-up Final F5 cleanup
+workspace=/c/Users/wjfeo/dev/career/.codex-tmp/resume-claim-ledger
+## QA sessions before cleanup
+no server running on /tmp/tmux-197609/default
+## killing ulw-qa sessions
+## removing generated files and directories
+not present: tmp/followup-final-qa
+removing /c/Users/wjfeo/dev/career/.codex-tmp/resume-claim-ledger/tmp/followup-final-qa.sh
+not present: dist
+## QA sessions after cleanup
+no server running on /tmp/tmux-197609/default
+## remaining tmp
+tmp not present

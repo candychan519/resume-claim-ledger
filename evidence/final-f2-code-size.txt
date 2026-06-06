@@ -1,0 +1,7 @@
+# Final F2 code size
+212 src/resume_claim_ledger/cli.py
+107 src/resume_claim_ledger/models.py
+52 src/resume_claim_ledger/job_parser.py
+44 src/resume_claim_ledger/evidence_catalog.py
+127 src/resume_claim_ledger/coordinator.py
+48 src/resume_claim_ledger/coordinate_reporter.py

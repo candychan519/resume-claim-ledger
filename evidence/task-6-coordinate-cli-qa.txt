@@ -1,0 +1,38 @@
+Wrote 2 claims to tmp\ulw-coordinate\claims.yml
+Wrote submission plan to tmp\ulw-coordinate\submission-plan.md
+# Submission Plan
+
+## Summary
+
+- ready: 1
+- needs_evidence: 0
+- soften_wording: 0
+- jd_gap: 0
+- submission_blocker: 1
+
+## Actions
+
+### CLM-001
+
+- source: Python MLOps release checklist
+- action: ready
+- evidence_status: verified
+- jd_match: direct_keyword_match
+- requirements: REQ-001, REQ-002
+- evidence: EVD-001
+- next_step: ?���? 가?�� ?��?��?��?��?��.
+
+### CLM-002
+
+- source: large stable system built
+- action: submission_blocker
+- evidence_status: too_broad
+- jd_match: no_match
+- requirements: (none)
+- evidence: (none)
+- next_step: 근거�? 추�?�?��거나 ?���? ?�� ?��?��?�� ?��?��?��?��?��.
+
+--- cleanup receipt ---
+no server running on /tmp/tmux-197609/default
+tmp/ulw-coordinate removed
+tmp/ulw-coordinate-json removed
