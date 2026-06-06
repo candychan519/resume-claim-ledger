@@ -1,0 +1,7 @@
+interface:
+  display_name: "Resume Submission Coordinator"
+  short_description: "Evidence-bound resume submission workflow"
+  default_prompt: "Use $resume-submission-coordinator to review this resume submission safely."
+
+policy:
+  allow_implicit_invocation: true
