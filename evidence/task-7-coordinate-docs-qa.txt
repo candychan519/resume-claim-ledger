@@ -1,0 +1,33 @@
+
+ Usage: resume-ledger coordinate [OPTIONS] LEDGER
+
++- Arguments -----------------------------------------------------------------+
+| *    ledger      PATH  Claim ledger YAML file. [required]                   |
++-----------------------------------------------------------------------------+
++- Options -------------------------------------------------------------------+
+| *  --out           -o      PATH             Submission plan output path.    |
+|                                             [required]                      |
+|    --job                   PATH             Optional job description file.  |
+|    --evidence-dir          PATH             Optional evidence directory.    |
+|    --format                [markdown|json]  Coordinate output format.       |
+|                                             [default: markdown]             |
+|    --strict                                 Fail when submission blockers   |
+|                                             remain.                         |
+|    --help                                   Show this message and exit.     |
++-----------------------------------------------------------------------------+
+
+47:resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out
+ submission-plan.md
+48:resume-ledger coordinate claims.yml --format json --out submission-plan.json
+49:resume-ledger coordinate claims.yml --strict --out submission-plan.md
+85:resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out
+ submission-plan.md
+86:resume-ledger coordinate claims.yml --format json --out submission-plan.json
+87:resume-ledger coordinate claims.yml --strict --out submission-plan.md
+69:then writes Markdown or Coordinate JSON output.
+71:Coordinate JSON uses:
+92:## Coordinate JSON Fields
+
+--- cleanup receipt ---
+no server running on /tmp/tmux-197609/default
+tmp/ulw-task7 removed

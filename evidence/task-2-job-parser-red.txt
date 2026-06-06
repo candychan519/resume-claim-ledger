@@ -1,0 +1,20 @@
+ERROR: found no collectors for C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_job_parser.py::test_extract_job_requirements_from_markdown_required_and_preferred_sections
+
+ERROR: found no collectors for C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_job_parser.py::test_extract_job_requirements_when_input_is_empty_returns_empty_list
+
+ERROR: found no collectors for C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_job_parser.py::test_extract_job_requirements_keeps_stable_ordered_ids
+
+
+=================================== ERRORS ====================================
+__________________ ERROR collecting tests/test_job_parser.py __________________
+ImportError while importing test module 'C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_job_parser.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_job_parser.py:1: in <module>
+    from resume_claim_ledger.job_parser import extract_job_requirements
+E   ModuleNotFoundError: No module named 'resume_claim_ledger.job_parser'
+=========================== short test summary info ===========================
+ERROR tests/test_job_parser.py

@@ -47,3 +47,25 @@ def test_docs_define_advice_json_contract() -> None:
     ]
     for field in required:
         assert field in content
+
+
+def test_docs_define_coordinate_json_contract() -> None:
+    # Given: ledger schema documentation.
+    content = Path("docs/ledger-schema.md").read_text(encoding="utf-8")
+
+    # When: coordinate JSON contract documentation is inspected.
+    # Then: every public coordinate field is documented.
+    required = [
+        "Coordinate JSON",
+        "items",
+        "source_text",
+        "action",
+        "evidence_status",
+        "requirement_match",
+        "matched_requirements",
+        "matched_evidence",
+        "next_step",
+        "warnings",
+    ]
+    for field in required:
+        assert field in content

@@ -1,0 +1,20 @@
+# Follow-up Final F2 dogfood artifact review
+## artifacts
+-rw-r--r-- 1 wjfeo 197609 19261  6월  6 16:47 evidence/dogfood/current-resume-claims.yml
+-rw-r--r-- 1 wjfeo 197609 20147  6월  6 16:47 evidence/dogfood/naver-cloud-submission-plan.md
+-rw-r--r-- 1 wjfeo 197609  1216  6월  6 16:47 evidence/dogfood/observations.md
+## action summary
+- ready: 0
+- needs_evidence: 51
+- soften_wording: 0
+- jd_gap: 0
+- submission_blocker: 1
+## source hashes current
+674d79402b471354bdf4708b70a17a5b15befbac3fd96659d7dc969ef4f7972f */c/Users/wjfeo/dev/career/01_resume/current/20260531_권찬민_이력서_v1.4_MASTER_최근3축반영본.md
+5cc158bcfe8ee4a646f2826a86bf4c258571fa2ddad51dca14058a8720e19ebe */c/Users/wjfeo/dev/career/03_applications/20251201_naver-cloud/네이버클라우드채용공고.txt
+## expected hashes from dogfood run
+674d79402b471354bdf4708b70a17a5b15befbac3fd96659d7dc969ef4f7972f */c/Users/wjfeo/dev/career/01_resume/current/20260531_권찬민_이력서_v1.4_MASTER_최근3축반영본.md
+5cc158bcfe8ee4a646f2826a86bf4c258571fa2ddad51dca14058a8720e19ebe */c/Users/wjfeo/dev/career/03_applications/20251201_naver-cloud/네이버클라우드채용공고.txt
+674d79402b471354bdf4708b70a17a5b15befbac3fd96659d7dc969ef4f7972f */c/Users/wjfeo/dev/career/01_resume/current/20260531_권찬민_이력서_v1.4_MASTER_최근3축반영본.md
+5cc158bcfe8ee4a646f2826a86bf4c258571fa2ddad51dca14058a8720e19ebe */c/Users/wjfeo/dev/career/03_applications/20251201_naver-cloud/네이버클라우드채용공고.txt
+## source status

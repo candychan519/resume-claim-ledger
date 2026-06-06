@@ -1,0 +1,24 @@
+codex/resume-coordinate-followups
+
+ Usage: resume-ledger coordinate [OPTIONS] LEDGER
+
++- Arguments -----------------------------------------------------------------+
+| *    ledger      PATH  Claim ledger YAML file. [required]                   |
++-----------------------------------------------------------------------------+
++- Options -------------------------------------------------------------------+
+| *  --out           -o      PATH             Submission plan output path.    |
+|                                             [required]                      |
+|    --job                   PATH             Optional job description file.  |
+|    --evidence-dir          PATH             Optional evidence directory.    |
+|    --format                [markdown|json]  Coordinate output format.       |
+|                                             [default: markdown]             |
+|    --strict                                 Fail when submission blockers   |
+|                                             remain.                         |
+|    --help                                   Show this message and exit.     |
++-----------------------------------------------------------------------------+
+
+__TASK1_QA_DONE__
+
+
+
+

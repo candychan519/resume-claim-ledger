@@ -1,0 +1,15 @@
+# Follow-up Final Root Review
+## summary targeted gates
+..                                                                       [100%]
+warning: `incorrect-blank-line-before-class` (D203) and `no-blank-line-before-class` (D211) are incompatible. Ignoring `incorrect-blank-line-before-class`.
+warning: `multi-line-summary-first-line` (D212) and `multi-line-summary-second-line` (D213) are incompatible. Ignoring `multi-line-summary-second-line`.
+All checks passed!
+0 errors, 0 warnings, 0 notes
+## final evidence markers
+45:__FOLLOWUP_FINAL_QA_STATUS=0
+3:no matches
+4:no server running on /tmp/tmux-197609/default
+11:no server running on /tmp/tmux-197609/default
+13:tmp not present
+## residue check
+ROOT_REVIEW_PASS

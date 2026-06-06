@@ -7,6 +7,14 @@ from rich.console import Console
 from rich.table import Table
 
 from .career_advisor import advise_career
+from .coordinate_reporter import (
+    build_coordinate_json,
+    build_coordinate_markdown,
+    build_coordinate_summary_markdown,
+)
+from .coordinator import coordinate_submission
+from .evidence_catalog import load_evidence_catalog
+from .job_parser import extract_job_requirements
 from .korean_polish import advise_korean_polish
 from .ledger_io import read_ledger, read_ledger_result, write_ledger
 from .models import Claim, ClaimStatus, Suggestion, SuggestionDict, suggestion_to_dict
@@ -15,6 +23,7 @@ from .reviewer import summarize_statuses
 from .scanner import extract_claims
 
 AdviceFormat = Literal["markdown", "json"]
+CoordinateFormat = Literal["markdown", "json"]
 UNRESOLVED_STATUSES: tuple[ClaimStatus, ...] = (
     "needs_evidence",
     "too_broad",
@@ -110,6 +119,68 @@ def report(
         error_console.print(
             f"Strict mode blocked unresolved claim statuses: {', '.join(sorted(set(unresolved)))}",
         )
+        raise typer.Exit(1)
+
+
+@app.command()
+def coordinate(  # noqa: PLR0913
+    ledger: Annotated[Path, typer.Argument(help="Claim ledger YAML file.")],
+    out: Annotated[Path, typer.Option("--out", "-o", help="Submission plan output path.")],
+    *,
+    job: Annotated[
+        Path | None,
+        typer.Option("--job", help="Optional job description file."),
+    ] = None,
+    evidence_dir: Annotated[
+        Path | None,
+        typer.Option("--evidence-dir", help="Optional evidence directory."),
+    ] = None,
+    output_format: Annotated[
+        CoordinateFormat,
+        typer.Option("--format", help="Coordinate output format."),
+    ] = "markdown",
+    strict: Annotated[
+        bool,
+        typer.Option("--strict", help="Fail when submission blockers remain."),
+    ] = False,
+    summary: Annotated[
+        bool,
+        typer.Option("--summary", help="Write compact Markdown summary output."),
+    ] = False,
+) -> None:
+    if not ledger.exists():
+        error_console.print(f"Ledger file does not exist: {ledger}")
+        raise typer.Exit(1)
+    if job is not None and not job.exists():
+        error_console.print(f"Job file does not exist: {job}")
+        raise typer.Exit(1)
+    if evidence_dir is not None and not evidence_dir.exists():
+        error_console.print(f"Evidence directory does not exist: {evidence_dir}")
+        raise typer.Exit(1)
+
+    result = read_ledger_result(ledger)
+    requirements = (
+        extract_job_requirements(job.read_text(encoding="utf-8")) if job is not None else []
+    )
+    evidence = load_evidence_catalog(evidence_dir) if evidence_dir is not None else []
+    plan = coordinate_submission(result.claims, requirements, evidence, result.warnings)
+
+    match output_format:
+        case "markdown":
+            content = (
+                build_coordinate_summary_markdown(plan)
+                if summary
+                else build_coordinate_markdown(plan)
+            )
+        case "json":
+            content = build_coordinate_json(plan)
+
+    _ = out.write_text(content, encoding="utf-8")
+    console.print(f"Wrote submission plan to {out}")
+
+    has_blockers = any(item.action == "submission_blocker" for item in plan.items)
+    if strict and (plan.warnings != () or has_blockers):
+        error_console.print("Strict mode blocked coordinate submission plan.")
         raise typer.Exit(1)
 
 

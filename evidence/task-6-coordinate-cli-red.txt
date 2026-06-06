@@ -1,0 +1,313 @@
+FFFFF.                                                                   [100%]
+================================== FAILURES ===================================
+____ test_coordinate_writes_markdown_submission_plan_with_job_and_evidence ____
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_writes_markdow0')
+
+    def test_coordinate_writes_markdown_submission_plan_with_job_and_evidence(
+        tmp_path: Path,
+    ) -> None:
+        # Given: a claim ledger, job description, and evidence directory.
+        ledger = tmp_path / "claims.yml"
+        job = tmp_path / "jd.md"
+        evidence_dir = tmp_path / "evidence"
+        out = tmp_path / "submission-plan.md"
+        evidence_dir.mkdir()
+        _ = ledger.write_text(
+            joined_lines(
+                [
+                    "schema_version: 1",
+                    "claims:",
+                    "  - claim_id: CLM-001",
+                    '    text: "Python MLOps 배포 체크리스트를 정리했습니다."',
+                    "    category: execution",
+                    "    status: verified",
+                    '    evidence_note: "release checklist"',
+                    '    suggested_rewrite: ""',
+                ],
+            ),
+            encoding="utf-8",
+        )
+        _ = job.write_text("## 필수\n- Python MLOps 운영\n", encoding="utf-8")
+        _ = (evidence_dir / "release.md").write_text("# release checklist\n", encoding="utf-8")
+    
+        # When: coordinate runs through the CLI.
+        result = run_cli(
+            [
+                "run",
+                "resume-ledger",
+                "coordinate",
+                str(ledger),
+                "--job",
+                str(job),
+                "--evidence-dir",
+                str(evidence_dir),
+                "--out",
+                str(out),
+            ],
+        )
+    
+        # Then: a Markdown submission plan is written.
+>       content = out.read_text(encoding="utf-8")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_cli_coordinate.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_writes_markdow0/submission-plan.md')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\wjfeo\\AppData\\Local\\Temp\\pytest-of-wjfeo\\pytest-33\\test_coordinate_writes_markdow0\\submission-plan.md'
+
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: FileNotFoundError
+________________ test_coordinate_json_outputs_stable_contract _________________
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_json_outputs_s0')
+
+    def test_coordinate_json_outputs_stable_contract(tmp_path: Path) -> None:
+        # Given: a ledger with an unresolved claim.
+        ledger = tmp_path / "claims.yml"
+        out = tmp_path / "submission-plan.json"
+        _ = ledger.write_text(
+            joined_lines(
+                [
+                    "schema_version: 1",
+                    "claims:",
+                    "  - claim_id: CLM-001",
+                    '    text: "장애 대응 문서를 정리했습니다."',
+                    "    category: execution",
+                    "    status: needs_evidence",
+                    '    evidence_note: "문서 링크 필요"',
+                    '    suggested_rewrite: ""',
+                ],
+            ),
+            encoding="utf-8",
+        )
+    
+        # When: coordinate writes JSON through the CLI.
+        result = run_cli(
+            [
+                "run",
+                "resume-ledger",
+                "coordinate",
+                str(ledger),
+                "--format",
+                "json",
+                "--out",
+                str(out),
+            ],
+        )
+    
+        # Then: the Coordinate JSON contract is visible.
+>       content = out.read_text(encoding="utf-8")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_cli_coordinate.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_json_outputs_s0/submission-plan.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\wjfeo\\AppData\\Local\\Temp\\pytest-of-wjfeo\\pytest-33\\test_coordinate_json_outputs_s0\\submission-plan.json'
+
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: FileNotFoundError
+_______ test_coordinate_when_job_is_omitted_still_writes_evidence_plan ________
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_when_job_is_om0')
+
+    def test_coordinate_when_job_is_omitted_still_writes_evidence_plan(tmp_path: Path) -> None:
+        # Given: a claim ledger and evidence directory without a job description.
+        ledger = tmp_path / "claims.yml"
+        evidence_dir = tmp_path / "evidence"
+        out = tmp_path / "submission-plan.md"
+        evidence_dir.mkdir()
+        _ = ledger.write_text(
+            joined_lines(
+                [
+                    "schema_version: 1",
+                    "claims:",
+                    "  - claim_id: CLM-001",
+                    '    text: "장애 대응 문서를 정리했습니다."',
+                    "    category: execution",
+                    "    status: needs_evidence",
+                    '    evidence_note: "incident note"',
+                    '    suggested_rewrite: ""',
+                ],
+            ),
+            encoding="utf-8",
+        )
+        _ = (evidence_dir / "incident.md").write_text("# incident note\n", encoding="utf-8")
+    
+        # When: coordinate runs without --job.
+        result = run_cli(
+            [
+                "run",
+                "resume-ledger",
+                "coordinate",
+                str(ledger),
+                "--evidence-dir",
+                str(evidence_dir),
+                "--out",
+                str(out),
+            ],
+        )
+    
+        # Then: JD matching is explicitly not evaluated.
+>       content = out.read_text(encoding="utf-8")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_cli_coordinate.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_when_job_is_om0/submission-plan.md')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\wjfeo\\AppData\\Local\\Temp\\pytest-of-wjfeo\\pytest-33\\test_coordinate_when_job_is_om0\\submission-plan.md'
+
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: FileNotFoundError
+_____ test_coordinate_when_explicit_evidence_dir_is_missing_exits_nonzero _____
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_when_explicit_0')
+
+    def test_coordinate_when_explicit_evidence_dir_is_missing_exits_nonzero(
+        tmp_path: Path,
+    ) -> None:
+        # Given: a valid ledger and a missing explicit evidence directory.
+        ledger = tmp_path / "claims.yml"
+        out = tmp_path / "submission-plan.md"
+        missing = tmp_path / "missing-evidence"
+        _ = ledger.write_text("schema_version: 1\nclaims:\n", encoding="utf-8")
+    
+        # When: coordinate runs with the missing evidence directory.
+        result = run_cli(
+            [
+                "run",
+                "resume-ledger",
+                "coordinate",
+                str(ledger),
+                "--evidence-dir",
+                str(missing),
+                "--out",
+                str(out),
+            ],
+        )
+    
+        # Then: it fails before writing a misleading plan.
+        assert result.returncode != 0
+>       assert "Evidence directory does not exist" in result.stderr
+E       assert 'Evidence directory does not exist' in "Usage: resume-ledger [OPTIONS] COMMAND [ARGS]...\nTry 'resume-ledger --help' for help.\n+- Error --------------------...                                  |\n+-----------------------------------------------------------------------------+\n"
+E        +  where "Usage: resume-ledger [OPTIONS] COMMAND [ARGS]...\nTry 'resume-ledger --help' for help.\n+- Error --------------------...                                  |\n+-----------------------------------------------------------------------------+\n" = CompletedProcess(args=['C:\\Users\\wjfeo\\AppData\\Local\\Microsoft\\WinGet\\Packages\\astral-sh.uv_Microsoft.Winget.S...                                 |\n+-----------------------------------------------------------------------------+\n").stderr
+
+tests\test_cli_coordinate.py:187: AssertionError
+______ test_coordinate_strict_blocks_malformed_ledger_after_writing_plan ______
+
+tmp_path = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_strict_blocks_0')
+
+    def test_coordinate_strict_blocks_malformed_ledger_after_writing_plan(
+        tmp_path: Path,
+    ) -> None:
+        # Given: a malformed ledger.
+        ledger = tmp_path / "malformed.yml"
+        out = tmp_path / "submission-plan.md"
+        _ = ledger.write_text("not_claims:\n  - broken\n", encoding="utf-8")
+    
+        # When: strict coordinate runs.
+        result = run_cli(
+            [
+                "run",
+                "resume-ledger",
+                "coordinate",
+                str(ledger),
+                "--out",
+                str(out),
+                "--strict",
+            ],
+        )
+    
+        # Then: it writes the warning plan and exits non-zero.
+>       content = out.read_text(encoding="utf-8")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_cli_coordinate.py:213: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/wjfeo/AppData/Local/Temp/pytest-of-wjfeo/pytest-33/test_coordinate_strict_blocks_0/submission-plan.md')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\wjfeo\\AppData\\Local\\Temp\\pytest-of-wjfeo\\pytest-33\\test_coordinate_strict_blocks_0\\submission-plan.md'
+
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED tests/test_cli_coordinate.py::test_coordinate_writes_markdown_submission_plan_with_job_and_evidence
+FAILED tests/test_cli_coordinate.py::test_coordinate_json_outputs_stable_contract
+FAILED tests/test_cli_coordinate.py::test_coordinate_when_job_is_omitted_still_writes_evidence_plan
+FAILED tests/test_cli_coordinate.py::test_coordinate_when_explicit_evidence_dir_is_missing_exits_nonzero
+FAILED tests/test_cli_coordinate.py::test_coordinate_strict_blocks_malformed_ledger_after_writing_plan

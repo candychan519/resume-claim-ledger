@@ -1,0 +1,27 @@
+Wrote submission plan to tmp\followup-task-3\submission-summary.md
+# Submission Summary
+
+## Counts
+
+- ready: 1
+- needs_evidence: 1
+- soften_wording: 0
+- jd_gap: 0
+- submission_blocker: 0
+
+## Needs Attention
+
+### CLM-002
+
+- action: needs_evidence
+- jd_match: not_evaluated
+- requirements: (none)
+- evidence: (none)
+- next_step: 근거 ?��?��?�� ?��결하?��?��.
+# Submission Summary
+- ready: 1
+- needs_evidence: 1
+## Needs Attention
+### CLM-002
+__TASK3_QA_DONE__
+

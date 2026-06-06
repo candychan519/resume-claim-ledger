@@ -1,0 +1,45 @@
+674d79402b471354bdf4708b70a17a5b15befbac3fd96659d7dc969ef4f7972f */c/Users/wjfeo
+/dev/career/01_resume/current/20260531_권찬�?_?��?��?��_v1.4_MASTER_최근3축반?��
+�?.md
+5cc158bcfe8ee4a646f2826a86bf4c258571fa2ddad51dca14058a8720e19ebe */c/Users/wjfeo
+/dev/career/03_applications/20251201_naver-cloud/?��?��버클?��?��?��채용공고.txt
+Wrote 52 claims to tmp\followup-task-2\current-resume-claims.yml
+Wrote submission plan to tmp\followup-task-2\naver-cloud-submission-plan.md
+674d79402b471354bdf4708b70a17a5b15befbac3fd96659d7dc969ef4f7972f */c/Users/wjfeo
+/dev/career/01_resume/current/20260531_권찬�?_?��?��?��_v1.4_MASTER_최근3축반?��
+�?.md
+5cc158bcfe8ee4a646f2826a86bf4c258571fa2ddad51dca14058a8720e19ebe */c/Users/wjfeo
+/dev/career/03_applications/20251201_naver-cloud/?��?��버클?��?��?��채용공고.txt
+# Submission Plan
+- ready: 0
+- needs_evidence: 51
+- submission_blocker: 1
+# Submission Plan
+
+## Summary
+
+- ready: 0
+- needs_evidence: 51
+- soften_wording: 0
+- jd_gap: 0
+- submission_blocker: 1
+
+## Actions
+
+### CLM-001
+
+- source: AI/MLOps Platform: MLflow, Model Registry, Model Serving, Jupyter Work
+space, AI Pipeline, Monitoring
+- action: needs_evidence
+- evidence_status: needs_evidence
+- jd_match: direct_keyword_match
+- requirements: REQ-003, REQ-004, REQ-005
+- evidence: (none)
+- next_step: 근거 ?��?��?�� ?��결하?��?��.
+
+### CLM-002
+
+- source: AX & Developer Productivity: Claude Code, Codex Agent Workflow, DevSpe
+c, Scorer, Rubric, MCP, Playwright
+__TASK2_QA_DONE__
+

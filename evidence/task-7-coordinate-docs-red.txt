@@ -1,0 +1,55 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+__________________ test_readme_documents_coordinate_command ___________________
+
+    def test_readme_documents_coordinate_command() -> None:
+        # Given: the project README.
+        content = Path("README.md").read_text(encoding="utf-8")
+    
+        # When: coordinate usage guidance is inspected.
+        # Then: users can find Markdown, JSON, and strict coordinate examples.
+>       assert "resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md" in content
+E       assert 'resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md' in '# Resume Claim Ledger\n\nTrack and verify resume claims, then suggest safer wording before submission.\n\n## Install\..._rewrite: ""\n```\n\nFor the full ledger and Advice JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).\n'
+
+tests\test_readme_contract.py:114: AssertionError
+______ test_readme_describes_coordinate_as_report_only_and_deterministic ______
+
+    def test_readme_describes_coordinate_as_report_only_and_deterministic() -> None:
+        # Given: the project README.
+        content = Path("README.md").read_text(encoding="utf-8")
+    
+        # When: the coordinate product promise is inspected.
+        # Then: it avoids implying automatic rewriting or AI scoring.
+>       assert "Coordinate mode is report-only" in content
+E       assert 'Coordinate mode is report-only' in '# Resume Claim Ledger\n\nTrack and verify resume claims, then suggest safer wording before submission.\n\n## Install\..._rewrite: ""\n```\n\nFor the full ledger and Advice JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).\n'
+
+tests\test_readme_contract.py:125: AssertionError
+__________________ test_docs_define_coordinate_json_contract __________________
+
+    def test_docs_define_coordinate_json_contract() -> None:
+        # Given: ledger schema documentation.
+        content = Path("docs/ledger-schema.md").read_text(encoding="utf-8")
+    
+        # When: coordinate JSON contract documentation is inspected.
+        # Then: every public coordinate field is documented.
+        required = [
+            "Coordinate JSON",
+            "items",
+            "source_text",
+            "action",
+            "evidence_status",
+            "requirement_match",
+            "matched_requirements",
+            "matched_evidence",
+            "next_step",
+            "warnings",
+        ]
+        for field in required:
+>           assert field in content
+E           AssertionError: assert 'Coordinate JSON' in '# Ledger Schema\n\n## Version 1\n\nGenerated ledgers use:\n\n```yaml\nschema_version: 1\nclaims:\n  - claim_id: CLM-0... the HR or Korean polish issue.\n- `suggested_text`: conservative wording suggestion that must preserve known facts.\n'
+
+tests\test_ledger_schema_docs.py:71: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_readme_contract.py::test_readme_documents_coordinate_command
+FAILED tests/test_readme_contract.py::test_readme_describes_coordinate_as_report_only_and_deterministic
+FAILED tests/test_ledger_schema_docs.py::test_docs_define_coordinate_json_contract

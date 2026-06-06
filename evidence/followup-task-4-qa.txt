@@ -1,0 +1,32 @@
+
+ Usage: resume-ledger coordinate [OPTIONS] LEDGER
+
++- Arguments -----------------------------------------------------------------+
+| *    ledger      PATH  Claim ledger YAML file. [required]                   |
++-----------------------------------------------------------------------------+
++- Options -------------------------------------------------------------------+
+| *  --out           -o      PATH             Submission plan output path.    |
+|                                             [required]                      |
+|    --job                   PATH             Optional job description file.  |
+|    --evidence-dir          PATH             Optional evidence directory.    |
+|    --format                [markdown|json]  Coordinate output format.       |
+|                                             [default: markdown]             |
+|    --strict                                 Fail when submission blockers   |
+|                                             remain.                         |
+|    --summary                                Write compact Markdown summary  |
+|                                             output.                         |
+|    --help                                   Show this message and exit.     |
++-----------------------------------------------------------------------------+
+
+48:resume-ledger coordinate claims.yml --summary --out submission-summary.md
+87:resume-ledger coordinate claims.yml --summary --out submission-summary.md
+95:- Use `--summary` for a compact summary that lists action counts and non-read
+y claims only.
+39:- Keep summary mode report-only; it should show action counts and non-ready c
+laims without expanding ready claim details.
+28:      - run: uv run pytest -q
+29:      - run: uv run ruff check .
+30:      - run: uv run basedpyright
+31:      - run: uv build
+__TASK4_QA_DONE__
+

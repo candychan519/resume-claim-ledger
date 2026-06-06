@@ -1,0 +1,28 @@
+Wrote submission plan to tmp\ulw-coordinate-json\submission-plan.json
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "claim_id": "CLM-001",
+      "source_text": "incident docs",
+      "action": "needs_evidence",
+      "evidence_status": "needs_evidence",
+      "requirement_match": "not_evaluated",
+      "matched_requirements": [],
+      "matched_evidence": [],
+      "next_step": "근거 ?��?��?�� ?��결하?��?��."
+    }
+  ],
+  "warnings": []
+}
+
+
+
+
+
+
+
+--- cleanup receipt ---
+no server running on /tmp/tmux-197609/default
+tmp/ulw-coordinate removed
+tmp/ulw-coordinate-json removed
