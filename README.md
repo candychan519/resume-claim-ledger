@@ -95,6 +95,10 @@ For agent-assisted work, use the default policy file and checklist in
 [policy/submission-policy.yml](policy/submission-policy.yml) and
 [docs/agent-guardrails.md](docs/agent-guardrails.md).
 
+Agents that support repository skills can use
+[$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md)
+for the end-to-end safe submission workflow.
+
 ## Why This Exists
 
 AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resume Claim Ledger keeps a local evidence ledger so each resume bullet can be reviewed before submission. Advice is report-only: it can suggest safer wording, but it does not rewrite your source resume or ledger.
