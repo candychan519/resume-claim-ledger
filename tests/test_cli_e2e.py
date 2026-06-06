@@ -121,6 +121,211 @@ def test_report_strict_mode_when_unverified_claims_exist_exits_nonzero(tmp_path:
     assert "needs_evidence" in result.stderr
 
 
+def test_doctor_when_ledger_is_submission_ready_exits_zero(tmp_path: Path) -> None:
+    # Given: a ledger with only verified claims.
+    ledger = tmp_path / "claims.yml"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "배포 체크리스트를 정리했습니다."',
+                "    category: execution",
+                "    status: verified",
+                '    evidence_note: "release checklist"',
+                '    suggested_rewrite: ""',
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: doctor runs through the CLI.
+    result = run_cli(["run", "resume-ledger", "doctor", str(ledger)])
+
+    # Then: it passes the submission readiness check.
+    assert result.returncode == 0
+    assert "Ready for submission" in result.stdout
+    assert "verified" in result.stdout
+
+
+def test_doctor_with_policy_when_ledger_is_ready_exits_zero(tmp_path: Path) -> None:
+    # Given: a verified ledger and a policy that requires doctor to pass.
+    ledger = tmp_path / "claims.yml"
+    policy = tmp_path / "submission-policy.yml"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "배포 체크리스트를 정리했습니다."',
+                "    category: execution",
+                "    status: verified",
+                '    evidence_note: "release checklist"',
+                '    suggested_rewrite: ""',
+            ],
+        ),
+        encoding="utf-8",
+    )
+    _ = policy.write_text(
+        joined_lines(
+            [
+                "submission_policy:",
+                "  allow_auto_edit_resume: false",
+                "  require_doctor_pass: true",
+                "  block_on:",
+                "    - malformed_ledger",
+                "    - needs_evidence",
+                "  forbidden_claim_changes:",
+                "    - add_metric",
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: doctor runs with the policy gate.
+    result = run_cli(["run", "resume-ledger", "doctor", str(ledger), "--policy", str(policy)])
+
+    # Then: both the default doctor and policy gate pass.
+    assert result.returncode == 0
+    assert "Ready for submission" in result.stdout
+    assert "Policy checks passed" in result.stdout
+
+
+def test_doctor_when_unresolved_claims_exist_exits_nonzero(tmp_path: Path) -> None:
+    # Given: a ledger with unresolved claim statuses.
+    ledger = tmp_path / "claims.yml"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "대규모 사용자를 대상으로 시스템을 구축했습니다."',
+                "    category: impact",
+                "    status: too_broad",
+                '    evidence_note: "근거 필요"',
+                '    suggested_rewrite: "시스템 구축 작업에 참여했습니다."',
+                "  - claim_id: CLM-002",
+                '    text: "장애 대응 문서를 정리했습니다."',
+                "    category: execution",
+                "    status: needs_evidence",
+                '    evidence_note: "문서 링크 필요"',
+                '    suggested_rewrite: ""',
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: doctor runs through the CLI.
+    result = run_cli(["run", "resume-ledger", "doctor", str(ledger)])
+
+    # Then: it blocks submission and names the unresolved statuses.
+    assert result.returncode != 0
+    assert "Doctor found unresolved claims" in result.stderr
+    assert "needs_evidence" in result.stderr
+    assert "too_broad" in result.stderr
+
+
+def test_doctor_with_policy_when_blocked_status_exists_exits_nonzero(tmp_path: Path) -> None:
+    # Given: a policy that blocks unresolved evidence gaps.
+    ledger = tmp_path / "claims.yml"
+    policy = tmp_path / "submission-policy.yml"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "장애 대응 문서를 정리했습니다."',
+                "    category: execution",
+                "    status: needs_evidence",
+                '    evidence_note: "문서 링크 필요"',
+                '    suggested_rewrite: ""',
+            ],
+        ),
+        encoding="utf-8",
+    )
+    _ = policy.write_text(
+        joined_lines(
+            [
+                "submission_policy:",
+                "  allow_auto_edit_resume: false",
+                "  require_doctor_pass: true",
+                "  block_on:",
+                "    - needs_evidence",
+                "  forbidden_claim_changes:",
+                "    - add_metric",
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: doctor runs with the policy gate.
+    result = run_cli(["run", "resume-ledger", "doctor", str(ledger), "--policy", str(policy)])
+
+    # Then: it names the policy violation.
+    assert result.returncode != 0
+    assert "Policy blocked submission" in result.stderr
+    assert "needs_evidence: 1" in result.stderr
+
+
+def test_doctor_with_policy_when_policy_file_is_missing_exits_nonzero(tmp_path: Path) -> None:
+    # Given: a verified ledger and a missing policy file.
+    ledger = tmp_path / "claims.yml"
+    missing_policy = tmp_path / "missing-policy.yml"
+    _ = ledger.write_text(
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "배포 체크리스트를 정리했습니다."',
+                "    category: execution",
+                "    status: verified",
+                '    evidence_note: "release checklist"',
+                '    suggested_rewrite: ""',
+            ],
+        ),
+        encoding="utf-8",
+    )
+
+    # When: doctor runs with a missing policy path.
+    result = run_cli(
+        ["run", "resume-ledger", "doctor", str(ledger), "--policy", str(missing_policy)],
+    )
+
+    # Then: it fails before pretending the policy was applied.
+    assert result.returncode != 0
+    assert "Policy file does not exist" in result.stderr
+
+
+def test_doctor_when_ledger_is_malformed_exits_nonzero(tmp_path: Path) -> None:
+    # Given: a malformed ledger file.
+    ledger = tmp_path / "malformed.yml"
+    _ = ledger.write_text("not_claims:\n  - broken\n", encoding="utf-8")
+
+    # When: doctor runs through the CLI.
+    result = run_cli(["run", "resume-ledger", "doctor", str(ledger)])
+
+    # Then: it blocks submission and surfaces the ledger warning.
+    assert result.returncode != 0
+    assert "Malformed ledger" in result.stderr
+
+
+def test_doctor_when_ledger_file_is_missing_exits_nonzero(tmp_path: Path) -> None:
+    # Given: a missing ledger path.
+    missing = tmp_path / "missing.yml"
+
+    # When: doctor runs through the CLI.
+    result = run_cli(["run", "resume-ledger", "doctor", str(missing)])
+
+    # Then: it exits non-zero with a user-readable missing-file error.
+    assert result.returncode != 0
+    assert "Ledger file does not exist" in result.stderr
+
+
 def test_advise_writes_career_and_korean_polish_report(tmp_path: Path) -> None:
     # Given: a ledger with an unresolved Korean claim.
     ledger = tmp_path / "claims.yml"

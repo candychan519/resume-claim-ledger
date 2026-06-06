@@ -1,0 +1,27 @@
+[('CLM-001', 'ready', 'direct_keyword_match', ('EVD-001',)), ('CLM-002', 'submis
+sion_blocker', 'no_match', ())]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- cleanup receipt ---
+no server running on /tmp/tmux-197609/default
+tmp/ulw-task4 removed

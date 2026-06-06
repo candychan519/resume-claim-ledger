@@ -1,0 +1,86 @@
+# Pre-commit check
+## diff check
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/ledger-schema.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/maintenance.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'evidence/final-f4-scope-fidelity.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pyproject.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/resume_claim_ledger/cli.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/resume_claim_ledger/models.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_ledger_schema_docs.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_readme_contract.py', LF will be replaced by CRLF the next time Git touches it
+## status
+ M README.md
+ M docs/ledger-schema.md
+ M docs/maintenance.md
+ M evidence/final-f4-scope-fidelity.txt
+ M pyproject.toml
+ M src/resume_claim_ledger/cli.py
+ M src/resume_claim_ledger/models.py
+ M tests/test_ledger_schema_docs.py
+ M tests/test_readme_contract.py
+?? evidence/dogfood/
+?? evidence/final-f1-full-gates.txt
+?? evidence/final-f2-code-size.txt
+?? evidence/final-f3-coordinate-manual-qa.txt
+?? evidence/final-f5-cleanup.txt
+?? evidence/followup-final-f1-full-gates.txt
+?? evidence/followup-final-f2-dogfood-review.txt
+?? evidence/followup-final-f3-manual-qa.txt
+?? evidence/followup-final-f4-scope-fidelity.txt
+?? evidence/followup-final-f5-cleanup-review.txt
+?? evidence/followup-final-root-review.txt
+?? evidence/followup-pr-body.md
+?? evidence/followup-precommit-check.txt
+?? evidence/followup-task-1-baseline.txt
+?? evidence/followup-task-1-gates.txt
+?? evidence/followup-task-1-qa.txt
+?? evidence/followup-task-2-dogfood-run.txt
+?? evidence/followup-task-2-qa.txt
+?? evidence/followup-task-3-green.txt
+?? evidence/followup-task-3-qa.txt
+?? evidence/followup-task-3-red.txt
+?? evidence/followup-task-4-green.txt
+?? evidence/followup-task-4-qa.txt
+?? evidence/followup-task-4-red.txt
+?? evidence/review-fix-green.txt
+?? evidence/review-fix-red.txt
+?? evidence/task-1-coordinate-models-basedpyright.txt
+?? evidence/task-1-coordinate-models-green.txt
+?? evidence/task-1-coordinate-models-qa.txt
+?? evidence/task-1-coordinate-models-red.txt
+?? evidence/task-2-job-parser-basedpyright.txt
+?? evidence/task-2-job-parser-green.txt
+?? evidence/task-2-job-parser-qa.txt
+?? evidence/task-2-job-parser-red.txt
+?? evidence/task-3-evidence-catalog-basedpyright.txt
+?? evidence/task-3-evidence-catalog-green.txt
+?? evidence/task-3-evidence-catalog-qa.txt
+?? evidence/task-3-evidence-catalog-red.txt
+?? evidence/task-4-coordinator-basedpyright.txt
+?? evidence/task-4-coordinator-green.txt
+?? evidence/task-4-coordinator-qa.txt
+?? evidence/task-4-coordinator-red.txt
+?? evidence/task-5-coordinate-reporter-basedpyright.txt
+?? evidence/task-5-coordinate-reporter-green.txt
+?? evidence/task-5-coordinate-reporter-qa.txt
+?? evidence/task-5-coordinate-reporter-red.txt
+?? evidence/task-6-coordinate-cli-basedpyright.txt
+?? evidence/task-6-coordinate-cli-green.txt
+?? evidence/task-6-coordinate-cli-json-qa.txt
+?? evidence/task-6-coordinate-cli-qa.txt
+?? evidence/task-6-coordinate-cli-red.txt
+?? evidence/task-7-coordinate-docs-basedpyright.txt
+?? evidence/task-7-coordinate-docs-green.txt
+?? evidence/task-7-coordinate-docs-qa.txt
+?? evidence/task-7-coordinate-docs-red.txt
+?? src/resume_claim_ledger/coordinate_reporter.py
+?? src/resume_claim_ledger/coordinator.py
+?? src/resume_claim_ledger/evidence_catalog.py
+?? src/resume_claim_ledger/job_parser.py
+?? tests/test_cli_coordinate.py
+?? tests/test_coordinate_models.py
+?? tests/test_coordinate_reporter.py
+?? tests/test_coordinator.py
+?? tests/test_evidence_catalog.py
+?? tests/test_job_parser.py

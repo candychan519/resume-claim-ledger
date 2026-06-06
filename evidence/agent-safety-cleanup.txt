@@ -1,0 +1,22 @@
+tmp cleaned
+ M README.md
+ M docs/ledger-schema.md
+ M docs/maintenance.md
+ M src/resume_claim_ledger/cli.py
+ M src/resume_claim_ledger/coordinate_reporter.py
+ M tests/test_cli_coordinate.py
+ M tests/test_cli_e2e.py
+ M tests/test_coordinate_reporter.py
+ M tests/test_ledger_schema_docs.py
+ M tests/test_readme_contract.py
+?? docs/agent-guardrails.md
+?? evidence/agent-safety-cleanup.txt
+?? evidence/agent-safety-code-size.txt
+?? evidence/agent-safety-full-gates.txt
+?? evidence/agent-safety-green.txt
+?? evidence/agent-safety-manual-qa.txt
+?? evidence/agent-safety-red.txt
+?? policy/
+?? src/resume_claim_ledger/advice_reporter.py
+?? src/resume_claim_ledger/submission_policy.py
+?? tests/test_submission_policy.py

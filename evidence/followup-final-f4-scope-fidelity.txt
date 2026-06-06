@@ -1,0 +1,3 @@
+# Follow-up Final F4 scope fidelity
++ rg -n "openai|anthropic|llm|api key|requests|httpx|fetch|rewrite source|overwrite resume" src README.md docs tests
+no matches

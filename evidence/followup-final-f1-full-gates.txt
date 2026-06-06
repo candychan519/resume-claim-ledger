@@ -1,0 +1,30 @@
+# Follow-up Final F1 full gates
+## pytest
+........................................................................ [ 82%]
+...............                                                          [100%]
+## ruff
+warning: `incorrect-blank-line-before-class` (D203) and `no-blank-line-before-class` (D211) are incompatible. Ignoring `incorrect-blank-line-before-class`.
+warning: `multi-line-summary-first-line` (D212) and `multi-line-summary-second-line` (D213) are incompatible. Ignoring `multi-line-summary-second-line`.
+All checks passed!
+## basedpyright
+0 errors, 0 warnings, 0 notes
+## build
+Building source distribution...
+Building wheel from source distribution...
+Successfully built dist\resume_claim_ledger-0.1.0.tar.gz
+Successfully built dist\resume_claim_ledger-0.1.0-py3-none-any.whl
+## evidence files
+present: evidence/followup-task-1-baseline.txt
+present: evidence/followup-task-1-gates.txt
+present: evidence/followup-task-1-qa.txt
+present: evidence/followup-task-2-dogfood-run.txt
+present: evidence/followup-task-2-qa.txt
+present: evidence/followup-task-3-red.txt
+present: evidence/followup-task-3-green.txt
+present: evidence/followup-task-3-qa.txt
+present: evidence/followup-task-4-red.txt
+present: evidence/followup-task-4-green.txt
+present: evidence/followup-task-4-qa.txt
+present: evidence/dogfood/current-resume-claims.yml
+present: evidence/dogfood/naver-cloud-submission-plan.md
+present: evidence/dogfood/observations.md

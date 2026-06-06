@@ -1,0 +1,45 @@
+## happy path markdown coordinate
++ uv run resume-ledger coordinate tmp/ulw-final-qa/claims.yml --job tmp/ulw-fina
+l-qa/jd.md --evidence-dir tmp/ulw-final-qa/evidence --out tmp/ulw-final-qa/submi
+ssion-plan.md
+Wrote submission plan to tmp\ulw-final-qa\submission-plan.md
+exit_code=0
+# Submission Plan
+### CLM-001
+- jd_match: direct_keyword_match
+- evidence: EVD-001
+## no JD coordinate
++ uv run resume-ledger coordinate tmp/ulw-final-qa/claims.yml --evidence-dir tmp
+/ulw-final-qa/evidence --out tmp/ulw-final-qa/submission-plan-no-jd.md
+Wrote submission plan to tmp\ulw-final-qa\submission-plan-no-jd.md
+exit_code=0
+- jd_match: not_evaluated
+- evidence: EVD-002
+- jd_match: not_evaluated
+- evidence: EVD-001
+## JSON coordinate
++ uv run resume-ledger coordinate tmp/ulw-final-qa/claims.yml --format json --ou
+t tmp/ulw-final-qa/submission-plan.json
+Wrote submission plan to tmp\ulw-final-qa\submission-plan.json
+exit_code=0
+  "schema_version": 1,
+  "items": [
+      "claim_id": "CLM-001",
+## strict malformed coordinate
++ uv run resume-ledger coordinate tmp/ulw-final-qa/malformed.yml --out tmp/ulw-f
+inal-qa/malformed-plan.md --strict
+Wrote submission plan to tmp\ulw-final-qa\malformed-plan.md
+Strict mode blocked coordinate submission plan.
+exit_code=1
+## Warnings
+- Malformed ledger shape: expected claims list.
+## adjacent advise regression
++ uv run resume-ledger advise tmp/ulw-final-qa/claims.yml --out tmp/ulw-final-qa
+/advice.md
+Wrote advice to tmp\ulw-final-qa\advice.md
+exit_code=0
+# Claim Review
+### CLM-002
+### CLM-002: 본인 ?��?��?�� ?�� 분명?�� ?��?��?��.
+__F3_STATUS=0
+

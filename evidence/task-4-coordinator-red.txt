@@ -1,0 +1,22 @@
+ERROR: found no collectors for C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_coordinator.py::test_coordinate_submission_marks_verified_claim_ready_when_evidence_and_required_jd_match
+
+ERROR: found no collectors for C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_coordinator.py::test_coordinate_submission_marks_unresolved_claim_as_submission_blocker_when_evidence_is_missing
+
+ERROR: found no collectors for C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_coordinator.py::test_coordinate_submission_when_no_job_requirements_uses_not_evaluated
+
+ERROR: found no collectors for C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_coordinator.py::test_coordinate_submission_does_not_expose_absolute_evidence_paths
+
+
+=================================== ERRORS ====================================
+_________________ ERROR collecting tests/test_coordinator.py __________________
+ImportError while importing test module 'C:\Users\wjfeo\dev\career\.codex-tmp\resume-claim-ledger\tests\test_coordinator.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_coordinator.py:1: in <module>
+    from resume_claim_ledger.coordinator import coordinate_submission
+E   ModuleNotFoundError: No module named 'resume_claim_ledger.coordinator'
+=========================== short test summary info ===========================
+ERROR tests/test_coordinator.py

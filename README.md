@@ -39,16 +39,67 @@ uv build
 ```bash
 resume-ledger scan resume.md --out claims.yml
 resume-ledger review claims.yml
+resume-ledger doctor claims.yml
+resume-ledger doctor claims.yml --policy policy/submission-policy.yml
 resume-ledger report claims.yml --out claim-review.md
 resume-ledger report claims.yml --out claim-review.md --strict
 resume-ledger advise claims.yml --out advice.md
 resume-ledger advise claims.yml --format json --out advice.json
+resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
+resume-ledger coordinate claims.yml --summary --out submission-summary.md
+resume-ledger coordinate claims.yml --summary --format json --out submission-summary.json
+resume-ledger coordinate claims.yml --format json --out submission-plan.json
+resume-ledger coordinate claims.yml --strict --out submission-plan.md
 ```
 
-Use `report --strict` as a submission gate: unresolved claims exit non-zero so
-they can block a release or final resume handoff. Malformed ledger files are
-reported as warnings in the generated report, including `Malformed ledger`
+Use `doctor` as the quick submission gate: unresolved claims or malformed ledger
+warnings exit non-zero before a final resume handoff. Use `report --strict` when
+you also need to write the markdown review file as part of the same gate.
+Malformed ledger files are reported as warnings, including `Malformed ledger`
 messages, instead of editing the source file.
+
+## Recommended Workflow
+
+Start by turning a resume into a local claim ledger:
+
+```bash
+resume-ledger scan resume.md --out claims.yml
+```
+
+Start with `--summary` when you want a quick submission triage view:
+
+```bash
+resume-ledger coordinate claims.yml --summary --out submission-summary.md
+```
+
+Use the full submission plan when you have a job description and evidence files:
+
+```bash
+resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
+```
+
+Use JSON when another tool needs stable structured output:
+
+```bash
+resume-ledger coordinate claims.yml --format json --out submission-plan.json
+```
+
+Before a final handoff, run the submission gate:
+
+```bash
+resume-ledger doctor claims.yml
+resume-ledger doctor claims.yml --policy policy/submission-policy.yml
+```
+
+For agent-assisted work, use the default policy file and checklist in
+[policy/submission-policy.yml](policy/submission-policy.yml) and
+[docs/agent-guardrails.md](docs/agent-guardrails.md).
+
+Agents that support repository skills can use
+[$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md)
+for the end-to-end safe submission workflow, or
+[$evidence-triage](skills/evidence-triage/SKILL.md)
+when they only need to classify missing proof before editing.
 
 ## Why This Exists
 
@@ -71,6 +122,27 @@ resume-ledger advise claims.yml --format json --out advice.json
 
 Use `--polish-ko` to keep Korean polish enabled, or `--no-polish-ko` to produce only career/HR advice.
 Advice JSON uses a stable report-only schema; see [docs/ledger-schema.md](docs/ledger-schema.md).
+
+## Coordinate Mode
+
+`coordinate` turns a claim ledger, optional job description, and optional evidence directory into a submission action plan:
+
+```bash
+resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
+resume-ledger coordinate claims.yml --summary --out submission-summary.md
+resume-ledger coordinate claims.yml --summary --format json --out submission-summary.json
+resume-ledger coordinate claims.yml --format json --out submission-plan.json
+resume-ledger coordinate claims.yml --strict --out submission-plan.md
+```
+
+- Coordinate mode is report-only. It does not edit your resume, ledger, job description, or evidence files.
+- Job matching uses deterministic keyword matching, not AI scoring.
+- Evidence files are loaded from direct `.md` or `.txt` files in the evidence directory and shown by relative evidence IDs.
+- Use `--summary` for a compact summary that lists action counts and non-ready claims only.
+- Use `--summary --format json` when an agent needs a compact structured triage payload.
+- Use `--strict` to fail when malformed inputs or submission blockers remain after the plan is written.
+
+Coordinate JSON uses a stable schema; see [docs/ledger-schema.md](docs/ledger-schema.md).
 
 ## Sample
 
@@ -100,4 +172,4 @@ claims:
     suggested_rewrite: ""
 ```
 
-For the full ledger and Advice JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).
+For the full ledger, Advice JSON, and Coordinate JSON schema, see [docs/ledger-schema.md](docs/ledger-schema.md).

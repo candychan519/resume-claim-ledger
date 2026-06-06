@@ -1,0 +1,46 @@
+## summary coordinate
++ uv run resume-ledger coordinate tmp/followup-final-qa/claims.yml --summary --o
+ut tmp/followup-final-qa/summary.md
+Wrote submission plan to tmp\followup-final-qa\summary.md
+exit_code=0
+# Submission Summary
+- ready: 1
+- needs_evidence: 1
+## Needs Attention
+### CLM-002
+## full markdown coordinate
++ uv run resume-ledger coordinate tmp/followup-final-qa/claims.yml --job tmp/fol
+lowup-final-qa/jd.md --evidence-dir tmp/followup-final-qa/evidence --out tmp/fol
+lowup-final-qa/full.md
+Wrote submission plan to tmp\followup-final-qa\full.md
+exit_code=0
+# Submission Plan
+### CLM-001
+- jd_match: direct_keyword_match
+- evidence: EVD-001
+## JSON coordinate
++ uv run resume-ledger coordinate tmp/followup-final-qa/claims.yml --format json
+ --out tmp/followup-final-qa/plan.json
+Wrote submission plan to tmp\followup-final-qa\plan.json
+exit_code=0
+  "schema_version": 1,
+  "items": [
+      "claim_id": "CLM-001",
+## strict malformed coordinate
++ uv run resume-ledger coordinate tmp/followup-final-qa/malformed.yml --out tmp/
+followup-final-qa/malformed.md --strict
+Wrote submission plan to tmp\followup-final-qa\malformed.md
+Strict mode blocked coordinate submission plan.
+exit_code=1
+## Warnings
+- Malformed ledger shape: expected claims list.
+## adjacent advise regression
++ uv run resume-ledger advise tmp/followup-final-qa/claims.yml --out tmp/followu
+p-final-qa/advice.md
+Wrote advice to tmp\followup-final-qa\advice.md
+exit_code=0
+# Claim Review
+### CLM-002
+### CLM-002: 본인 ?��?��?�� ?�� 분명?�� ?��?��?��.
+__FOLLOWUP_FINAL_QA_STATUS=0
+

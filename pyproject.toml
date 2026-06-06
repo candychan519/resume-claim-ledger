@@ -71,3 +71,4 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/test_cli_e2e.py" = ["S603"]
+"tests/test_cli_coordinate.py" = ["S603"]
