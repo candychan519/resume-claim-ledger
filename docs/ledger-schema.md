@@ -138,3 +138,62 @@ focus on blockers without copying full resume claims.
 - `warnings`: malformed input or parse warnings surfaced during coordination.
 - `non_ready`: only claims whose action is not `ready`.
 - `source_text`: intentionally omitted from summary JSON.
+
+## Repository Intake Output
+
+Repository intake schema version `1` is separate from ledger schema version `1`.
+The `repo intake` command writes a directory of static, report-only artifacts:
+
+- `repo-profile.md`
+- `repo-profile.json`
+- `evidence-catalog.json`
+- `claim-candidates.yml`
+- `evidence-gaps.md`
+- `agent-brief.md`
+- `knowledge-graph.json`
+
+`repo-profile.json` uses:
+
+```json
+{
+  "schema_version": 1,
+  "name": "demo",
+  "source": "github.com/acme/demo",
+  "revision": "abc1234",
+  "remote": "github.com/acme/demo",
+  "languages": ["Python"],
+  "package_manifests": ["pyproject.toml"],
+  "ci_workflows": [".github/workflows/ci.yml"],
+  "test_files": ["tests/test_cli.py"],
+  "documentation_files": ["README.md"],
+  "warnings": ["Repository analysis is static and report-only."]
+}
+```
+
+`evidence-catalog.json` uses `schema_version` and `items`. Each item has
+`evidence_id`, `kind`, `path`, `title`, `summary`, and `tags`. Paths are repository
+relative paths, not absolute local paths.
+
+`claim-candidates.yml` includes:
+
+- `claim_candidates`: report-only candidate records.
+- `claim_id`: stable ID such as `REPO-CLM-001`.
+- `text`: conservative candidate wording.
+- `confidence`: one of `low`, `medium`, or `high`.
+- `supporting_files`: repository-relative files that explain why the candidate exists.
+- `missing_confirmation`: facts the user must confirm before using the claim.
+
+`evidence-gaps.md` lists missing proof and skipped evidence, including large-file
+skips and contribution-confirmation blockers.
+
+`knowledge-graph.json` contains `nodes` and `edges`. Node `type` values are:
+
+- `Project`
+- `TechStack`
+- `Evidence`
+- `ClaimCandidate`
+- `EvidenceGap`
+
+Repository-derived claim candidates are not verified claims. Code presence, commit
+history, README text, and package manifests do not prove personal ownership,
+production usage, metrics, employer, dates, or scope.

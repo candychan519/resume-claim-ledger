@@ -86,6 +86,31 @@ def test_readme_collects_cli_commands_in_a_table() -> None:
         assert phrase in content
 
 
+def test_readme_documents_repo_intake_workflow() -> None:
+    # Given: the public README.
+    content = read_readme()
+
+    # When: repository intake guidance is inspected.
+    required = [
+        (
+            "resume-ledger repo intake https://github.com/acme/demo "
+            "--out knowledge/repos/demo --name demo"
+        ),
+        "repo-profile.md",
+        "claim-candidates.yml",
+        "knowledge-graph.json",
+        "| `repo intake` | Build a static repository evidence knowledge pack. |",
+        (
+            "| [docs/repo-intake.md](docs/repo-intake.md) | Repository evidence "
+            "intake workflow and schemas. |"
+        ),
+    ]
+
+    # Then: users can discover the command, outputs, and long-form docs.
+    for phrase in required:
+        assert phrase in content
+
+
 def test_readme_keeps_safety_model_together() -> None:
     # Given: the public README.
     content = read_readme()
@@ -192,6 +217,27 @@ def test_agent_guardrails_doc_defines_safe_agent_workflow() -> None:
     ]
 
     # Then: agents are told to produce reports and stop on missing proof.
+    for phrase in required:
+        assert phrase in content
+
+
+def test_agent_guardrails_document_repo_intake_safety() -> None:
+    # Given: the agent guardrails document.
+    content = Path("docs/agent-guardrails.md").read_text(encoding="utf-8")
+
+    # When: repository intake rules are inspected.
+    required = [
+        "resume-ledger repo intake SOURCE --out knowledge/repos/NAME --name NAME",
+        "Do not run target repository code, package managers, tests, builds, scripts, or imports.",
+        (
+            "Do not infer personal ownership, metrics, dates, employer, production usage, "
+            "or scope from code presence."
+        ),
+        "Repository-derived claim candidates are not verified claims.",
+        "Never copy secret contents or private remote URLs into user-facing output.",
+    ]
+
+    # Then: agents are constrained to static, report-only repository evidence intake.
     for phrase in required:
         assert phrase in content
 
