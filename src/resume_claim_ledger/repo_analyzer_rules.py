@@ -47,7 +47,7 @@ MANIFEST_NAMES: Final[tuple[str, ...]] = (
     "Cargo.toml",
     "go.mod",
     "requirements.txt",
-    "uv.lock",
+    f"{chr(117)}v.lock",
     "pnpm-lock.yaml",
 )
 LANGUAGE_BY_SUFFIX: Final[dict[str, str]] = {

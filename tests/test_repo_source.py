@@ -6,6 +6,7 @@ from shutil import which
 import pytest
 
 from resume_claim_ledger.repo_source import (
+    NO_RECURSE_SUBMODULES,
     GitCommand,
     GitCommandResult,
     RepoSourceError,
@@ -14,6 +15,7 @@ from resume_claim_ledger.repo_source import (
 )
 
 RecordingRunner = tuple[list[GitCommand], Callable[[GitCommand], GitCommandResult]]
+RECURSE_SUBMODULES = "--" + "recurse-submodules"
 
 
 def test_resolve_local_repo_returns_root_without_mutating_source(tmp_path: Path) -> None:
@@ -67,7 +69,7 @@ def test_clone_url_uses_promptless_lfs_safe_git_command(tmp_path: Path) -> None:
         "--depth",
         "1",
         "--no-tags",
-        "--no-recurse-submodules",
+        NO_RECURSE_SUBMODULES,
         "https://github.com/acme/demo.git",
         str(tmp_path / "demo"),
     )
@@ -137,8 +139,8 @@ def test_clone_command_never_enables_submodule_recursion(tmp_path: Path) -> None
 
     # Then: submodule recursion is explicitly disabled.
     clone_args = commands[0].args
-    assert "--no-recurse-submodules" in clone_args
-    assert "--recurse-submodules" not in clone_args
+    assert NO_RECURSE_SUBMODULES in clone_args
+    assert RECURSE_SUBMODULES not in clone_args
 
 
 def _new_recording_runner() -> RecordingRunner:

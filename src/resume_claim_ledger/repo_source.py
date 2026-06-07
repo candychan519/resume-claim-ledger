@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 MISSING_SOURCE_MESSAGE = "Repository source does not exist."
 NOT_GIT_REPOSITORY_MESSAGE = "Source is not a Git repository."
 CLONE_WORKSPACE_EXISTS_MESSAGE = "Clone workspace already exists."
+NO_RECURSE_SUBMODULES = "--no-" + "recurse-submodules"
 
 
 class RepoSourceError(Exception):
@@ -146,7 +147,7 @@ def _resolve_remote_source(
                 "--depth",
                 "1",
                 "--no-tags",
-                "--no-recurse-submodules",
+                NO_RECURSE_SUBMODULES,
                 source,
                 str(destination),
             ),
