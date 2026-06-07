@@ -90,6 +90,7 @@ Agents that support repository skills can use:
 
 - [$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md) for the end-to-end safe submission workflow.
 - [$evidence-triage](skills/evidence-triage/SKILL.md) when they only need to classify missing proof before editing.
+- [$repo-evidence-intake](skills/repo-evidence-intake/SKILL.md) before using repository facts in resume or portfolio work.
 
 ## Commands
 
