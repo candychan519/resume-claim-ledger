@@ -29,6 +29,7 @@ RepoJsonPayload = RepoProfileDict | RepoEvidenceCatalogDict | RepoKnowledgeGraph
 LOCAL_PATH_PATTERN: Final[re.Pattern[str]] = re.compile(
     r"(^|[\s\"'(:])([A-Za-z]:[\\/]|\\\\Users\\\\|/Users/|/home/|/tmp/|/var/folders/)",
 )
+LOCAL_PATH_OUTPUT_MESSAGE = "repository knowledge pack output contains a local absolute path"
 
 
 def build_repo_knowledge_pack_outputs(pack: RepoKnowledgePack) -> dict[RepoOutputFile, str]:
@@ -183,4 +184,4 @@ def _quote(value: str) -> str:
 
 def _raise_for_local_path(content: str) -> None:
     if LOCAL_PATH_PATTERN.search(content) is not None:
-        raise ValueError("repository knowledge pack output contains a local absolute path")
+        raise ValueError(LOCAL_PATH_OUTPUT_MESSAGE)

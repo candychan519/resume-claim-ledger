@@ -15,6 +15,10 @@ EXPECTED_PACK_FILES = (
 GIT_REQUIRED_MESSAGE = "git executable is required for CLI repo tests"
 
 
+def joined_lines(lines: list[str]) -> str:
+    return "\n".join(lines) + "\n"
+
+
 def test_repo_intake_writes_knowledge_pack_for_local_repo(tmp_path: Path) -> None:
     # Given: a local Git repository with repository evidence signals.
     source = _init_repo(tmp_path / "source")
@@ -185,6 +189,48 @@ def test_repo_intake_refuses_non_empty_output_directory(tmp_path: Path) -> None:
     assert result.returncode != 0
     assert "Output directory is not empty" in result.stderr
     assert (out / "existing.txt").read_text(encoding="utf-8") == "do not overwrite\n"
+
+
+def test_repo_intake_pack_can_feed_coordinate_evidence_dir(tmp_path: Path) -> None:
+    # Given: a repository knowledge pack and a verified claim that references it.
+    source = _init_repo(tmp_path / "source")
+    _write(source / "README.md", "# Deployment Toolkit\n")
+    _commit_all(source, "init")
+    pack = tmp_path / "pack"
+    ledger = tmp_path / "claims.yml"
+    plan = tmp_path / "submission-plan.md"
+    intake = run_cli(
+        ["repo", "intake", str(source), "--out", str(pack), "--name", "deployment-toolkit"],
+    )
+    _write(
+        ledger,
+        joined_lines(
+            [
+                "schema_version: 1",
+                "claims:",
+                "  - claim_id: CLM-001",
+                '    text: "Deployment Toolkit repository evidence was reviewed."',
+                "    category: execution",
+                "    status: verified",
+                '    evidence_note: "repo-profile.md"',
+                '    suggested_rewrite: ""',
+            ],
+        ),
+    )
+
+    # When: coordinate reads the generated pack as an evidence directory.
+    coordinate = run_cli(
+        ["coordinate", str(ledger), "--evidence-dir", str(pack), "--out", str(plan)],
+    )
+
+    # Then: coordinate succeeds and references repository evidence IDs.
+    content = plan.read_text(encoding="utf-8")
+    assert intake.returncode == 0
+    assert coordinate.returncode == 0
+    assert "Wrote repository knowledge pack." in intake.stdout
+    assert "- action: ready" in content
+    assert "- evidence: EVD-" in content
+    assert "- evidence: (none)" not in content
 
 
 def run_cli(args: list[str]) -> subprocess.CompletedProcess[str]:
