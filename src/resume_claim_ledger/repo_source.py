@@ -74,6 +74,7 @@ def cleanup_repository_source(resolved: ResolvedRepo) -> None:
     if resolved.cleanup_dir is None:
         return
     if resolved.cleanup_dir.name.startswith("resume-ledger-repo-"):
+        _make_tree_writable(resolved.cleanup_dir)
         shutil.rmtree(resolved.cleanup_dir)
 
 
@@ -221,3 +222,11 @@ def _safe_git_failure(args: tuple[str, ...]) -> str:
     if "checkout" in args:
         return "Git ref checkout failed."
     return "Git command failed."
+
+
+def _make_tree_writable(root: Path) -> None:
+    if not root.exists():
+        return
+    for path in root.rglob("*"):
+        path.chmod(0o700)
+    root.chmod(0o700)
