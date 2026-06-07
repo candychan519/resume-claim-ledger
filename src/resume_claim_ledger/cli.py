@@ -17,6 +17,7 @@ from .evidence_catalog import load_evidence_catalog
 from .job_parser import extract_job_requirements
 from .ledger_io import LedgerReadResult, read_ledger, read_ledger_result, write_ledger
 from .models import ClaimStatus
+from .repo_cli import repo_app
 from .reporter import build_report
 from .reviewer import summarize_statuses
 from .scanner import extract_claims
@@ -37,6 +38,7 @@ UNRESOLVED_STATUSES: tuple[ClaimStatus, ...] = (
 app = typer.Typer(help="Track and review resume claims against evidence.")
 console = Console()
 error_console = Console(stderr=True)
+app.add_typer(repo_app, name="repo")
 
 
 @app.command()

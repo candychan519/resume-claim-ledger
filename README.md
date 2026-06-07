@@ -12,6 +12,7 @@ AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resum
 - Flags unsupported, overbroad, malformed, or rewrite-needed claims.
 - Suggests safer wording without editing the source resume.
 - Builds a submission plan from claims, an optional job description, and optional evidence files.
+- Builds a static repository evidence knowledge pack for agent review.
 - Runs a policy-aware doctor gate before final handoff.
 - Provides agent guardrails and skills for safe resume coordination.
 
@@ -20,6 +21,7 @@ AI-assisted resume writing can quietly inflate scope, impact, and metrics. Resum
 - Does not rewrite your source resume automatically.
 - Does not invent metrics, employers, dates, links, certifications, or scope.
 - Does not use AI scoring for JD matching.
+- Does not run target repository code, installs, tests, builds, scripts, or imports.
 - Does not replace human evidence review or recruiter judgment.
 
 Report-only means outputs are suggestions and gates, not source-file edits.
@@ -43,6 +45,15 @@ Build the full submission plan when you have a job description and evidence file
 ```bash
 resume-ledger coordinate claims.yml --job jd.md --evidence-dir evidence --out submission-plan.md
 ```
+
+Build a static repository evidence pack before using repository facts in resume or portfolio work:
+
+```bash
+resume-ledger repo intake https://github.com/acme/demo --out knowledge/repos/demo --name demo
+```
+
+The pack includes `repo-profile.md`, `evidence-catalog.json`, `claim-candidates.yml`,
+`evidence-gaps.md`, `agent-brief.md`, and `knowledge-graph.json`.
 
 Run the final policy gate:
 
@@ -79,6 +90,7 @@ Agents that support repository skills can use:
 
 - [$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md) for the end-to-end safe submission workflow.
 - [$evidence-triage](skills/evidence-triage/SKILL.md) when they only need to classify missing proof before editing.
+- [$repo-evidence-intake](skills/repo-evidence-intake/SKILL.md) before using repository facts in resume or portfolio work.
 
 ## Commands
 
@@ -89,6 +101,7 @@ Agents that support repository skills can use:
 | `report` | Write a Markdown claim review. |
 | `advise` | Produce report-only career and Korean polish suggestions. |
 | `coordinate` | Build a submission plan from claims, JD, and evidence. |
+| `repo intake` | Build a static repository evidence knowledge pack. |
 | `doctor` | Fail the final gate when unsafe claims remain. |
 
 Common examples:
@@ -101,6 +114,7 @@ resume-ledger advise claims.yml --polish-ko --out advice.md
 resume-ledger advise claims.yml --format json --out advice.json
 resume-ledger coordinate claims.yml --format json --out submission-plan.json
 resume-ledger coordinate claims.yml --strict --out submission-plan.md
+resume-ledger repo intake SOURCE --out knowledge/repos/NAME --name NAME
 ```
 
 `doctor` is the quick submission gate. `report --strict` and `coordinate --strict` also fail when malformed inputs or submission blockers remain after writing their reports.
@@ -172,6 +186,7 @@ uv build
 | Document | Purpose |
 | --- | --- |
 | [docs/ledger-schema.md](docs/ledger-schema.md) | Ledger, Advice JSON, and Coordinate JSON schemas. |
+| [docs/repo-intake.md](docs/repo-intake.md) | Repository evidence intake workflow and schemas. |
 | [docs/agent-guardrails.md](docs/agent-guardrails.md) | Safe behavior for AI agents. |
 | [docs/releasing.md](docs/releasing.md) | Release and publishing process. |
 | [docs/maintenance.md](docs/maintenance.md) | Maintainer checks and deterministic rule guidance. |

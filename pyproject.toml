@@ -70,5 +70,12 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
+"src/resume_claim_ledger/repo_analyzer.py" = ["PLR0913"]
+"src/resume_claim_ledger/repo_analyzer_builders.py" = ["PLR0913"]
+"src/resume_claim_ledger/repo_source.py" = ["S603"]
 "tests/test_cli_e2e.py" = ["S603"]
 "tests/test_cli_coordinate.py" = ["S603"]
+"tests/test_cli_repo.py" = ["S603"]
+"tests/test_repo_analyzer.py" = ["S603"]
+"tests/test_repo_reporter.py" = ["S108"]
+"tests/test_repo_source.py" = ["S603"]

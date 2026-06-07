@@ -84,3 +84,30 @@ def test_docs_define_coordinate_summary_json_contract() -> None:
     ]
     for field in required:
         assert field in content
+
+
+def test_docs_define_repo_intake_json_contract() -> None:
+    # Given: ledger schema documentation.
+    content = Path("docs/ledger-schema.md").read_text(encoding="utf-8")
+
+    # When: repository intake schema documentation is inspected.
+    required = [
+        "Repository Intake Output",
+        "repo-profile.json",
+        "evidence-catalog.json",
+        "knowledge-graph.json",
+        "Repository intake schema version `1` is separate from ledger schema version `1`.",
+        "claim_candidates",
+        "confidence",
+        "supporting_files",
+        "missing_confirmation",
+        "Project",
+        "TechStack",
+        "Evidence",
+        "ClaimCandidate",
+        "EvidenceGap",
+    ]
+
+    # Then: every public repository knowledge-pack contract is documented.
+    for field in required:
+        assert field in content

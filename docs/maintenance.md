@@ -39,6 +39,16 @@ Coordinate rules are deterministic and offline. Keep them submission-focused:
 - Keep summary mode report-only; it should show action counts and non-ready claims without expanding ready claim details.
 - Add a failing CLI test before changing `coordinate` behavior, including one adjacent regression check for `advise`, `doctor`, or `report`.
 
+## Repository Intake Rules
+
+Repository intake must stay static, deterministic, and report-only:
+
+- Keep no code execution in target repositories: no package managers, tests, builds, scripts, imports, or hooks.
+- Do not infer metrics, ownership, employer, dates, production usage, or scope from repository contents.
+- Keep all generated paths repository-relative and redact private remotes or secret contents.
+- Add a failing CLI test before changing `repo intake` behavior, including one safety regression for non-git input, secrets, or path leakage.
+- Keep `knowledge-graph.json` export-ready, but do not document unsupported import commands.
+
 ## Agent Guardrails
 
 Keep the default policy in `policy/submission-policy.yml` conservative. Agent-facing workflows should run `resume-ledger doctor claims.yml --policy policy/submission-policy.yml` before handoff and should treat any policy violation as a submission blocker.

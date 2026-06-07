@@ -1,0 +1,7 @@
+interface:
+  display_name: "Repository Evidence Intake"
+  short_description: "Static repository evidence pack workflow"
+  default_prompt: "Use $repo-evidence-intake to inspect this repository safely before resume or portfolio work."
+
+policy:
+  allow_implicit_invocation: true
