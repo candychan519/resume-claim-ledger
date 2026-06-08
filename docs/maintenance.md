@@ -17,7 +17,27 @@ Dependabot tracks GitHub Actions and uv/Python dependencies. Review dependency u
 
 ## Release Safety
 
-Use GitHub environments for TestPyPI and PyPI. Keep production publishing behind manual approval.
+Current releases are artifact-only releases. Do not publish to TestPyPI or PyPI
+from the release workflow while package-index publishing is intentionally deferred.
+Keep TestPyPI and PyPI Trusted Publishing setup in `docs/releasing.md`
+as future guidance, not an active maintenance requirement.
+
+## Living Rules and Skills
+
+This project is still evolving. Treat repository rules, skills, and guardrails
+as working agreements rather than permanent policy.
+
+- When real work shows friction, make the smallest relevant update in the
+  same PR that exposed it.
+- Prefer one local edit over a new backlog, automation, or evaluation process.
+- Promote a rule only after the same issue has repeated across multiple tasks.
+- Add or strengthen hard rules immediately only for safety, data loss, security,
+  secret leakage, or claim-inflation risk.
+- Do not add automation, evaluation frameworks, or SkillOpt while the workflow
+  is still changing quickly.
+- Keep contract tests focused on triggers, hard stops, metadata, and safety
+  boundaries; avoid pinning full skill prose unless the exact wording is itself
+  the contract.
 
 ## Advice Rules
 

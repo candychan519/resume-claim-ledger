@@ -320,3 +320,37 @@ def test_maintenance_docs_describe_coordinate_summary_as_report_only() -> None:
     assert "summary mode" in content
     assert "non-ready claims" in content
     assert "report-only" in content
+
+
+def test_maintenance_docs_describe_living_rules_and_skills() -> None:
+    # Given: the maintenance documentation.
+    content = Path("docs/maintenance.md").read_text(encoding="utf-8")
+
+    # When: process maintenance guidance is inspected.
+    required = [
+        "Living Rules and Skills",
+        "working agreements",
+        "smallest relevant update",
+        "repeated",
+        "Do not add automation, evaluation frameworks, or SkillOpt",
+    ]
+
+    # Then: evolving rules and skills stay lightweight during the transition stage.
+    for phrase in required:
+        assert phrase in content
+
+
+def test_maintenance_docs_keep_release_publishing_deferred() -> None:
+    # Given: the maintenance documentation.
+    content = Path("docs/maintenance.md").read_text(encoding="utf-8")
+
+    # When: release safety guidance is inspected.
+    required = [
+        "artifact-only release",
+        "Do not publish to TestPyPI or PyPI",
+        "package-index publishing is intentionally deferred",
+    ]
+
+    # Then: maintenance guidance matches the current release workflow.
+    for phrase in required:
+        assert phrase in content
