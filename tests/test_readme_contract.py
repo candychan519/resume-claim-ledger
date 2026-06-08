@@ -331,6 +331,8 @@ def test_maintenance_docs_describe_living_rules_and_skills() -> None:
         "Living Rules and Skills",
         "working agreements",
         "smallest relevant update",
+        "dead surface",
+        "broad cleanup sweeps",
         "repeated",
         "Do not add automation, evaluation frameworks, or SkillOpt",
     ]
