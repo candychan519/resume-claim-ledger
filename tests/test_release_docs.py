@@ -6,32 +6,35 @@ def test_releasing_docs_define_semver_rollback_and_hotfix_flow() -> None:
     content = Path("docs/releasing.md").read_text(encoding="utf-8")
 
     # When: the release policy is inspected.
-    required = ["vMAJOR.MINOR.PATCH", "rollback", "hotfix", "TestPyPI", "PyPI"]
+    required = ["vMAJOR.MINOR.PATCH", "rollback", "hotfix", "artifact-only release"]
 
     # Then: release operators have a concrete policy.
     for phrase in required:
         assert phrase in content
 
 
-def test_release_docs_define_testpypi_first_flow() -> None:
+def test_release_docs_define_artifact_only_flow() -> None:
     # Given: release documentation.
     content = Path("docs/releasing.md").read_text(encoding="utf-8")
 
-    # When: the publishing order is inspected.
-    testpypi_index = content.index("TestPyPI")
-    pypi_index = content.index("production PyPI")
+    # When: the release workflow is inspected.
+    build_index = content.index("uv build")
+    artifact_index = content.index("GitHub artifact")
+    deferred_index = content.index("Publishing Deferred")
 
-    # Then: TestPyPI is documented before production PyPI.
-    assert testpypi_index < pypi_index
+    # Then: release builds artifacts before discussing future publishing.
+    assert build_index < artifact_index
+    assert artifact_index < deferred_index
 
 
-def test_release_docs_include_pending_publisher_details() -> None:
+def test_release_docs_mark_testpypi_and_pypi_as_deferred() -> None:
     # Given: release documentation.
     content = Path("docs/releasing.md").read_text(encoding="utf-8")
 
-    # When: first-time package publishing setup is inspected.
-    # Then: release operators know the exact pending publisher configuration.
-    assert "pending publisher" in content.casefold()
+    # When: publishing guidance is inspected.
+    # Then: TestPyPI and PyPI setup is documented as a future step, not current release work.
+    assert "Publishing Deferred" in content
+    assert "TestPyPI and PyPI publishing are intentionally disabled" in content
     assert "project name: `resume-claim-ledger`" in content
     assert "workflow filename: `release.yml`" in content
 

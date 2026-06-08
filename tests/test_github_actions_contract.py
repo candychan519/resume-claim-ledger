@@ -28,14 +28,19 @@ def test_ci_workflow_uses_python_313_matrix() -> None:
     assert 'python-version: ["3.13"]' in content
 
 
-def test_release_workflow_uses_oidc_and_no_pypi_token() -> None:
+def test_release_workflow_builds_artifacts_without_publishing() -> None:
     # Given: the release workflow.
     content = Path(".github/workflows/release.yml").read_text(encoding="utf-8")
 
-    # When: publishing authentication is inspected.
-    # Then: release uses OIDC Trusted Publishing, not long-lived token secrets.
-    assert "id-token: write" in content
-    assert "pypa/gh-action-pypi-publish@release/v1" in content
+    # When: release behavior is inspected.
+    # Then: release builds and uploads artifacts without publishing to package indexes.
+    assert "uv build" in content
+    assert "actions/upload-artifact@v7.0.1" in content
+    assert "publish-testpypi" not in content
+    assert "publish-pypi" not in content
+    assert "pypa/gh-action-pypi-publish@release/v1" not in content
+    assert "repository-url: https://test.pypi.org/legacy/" not in content
+    assert "id-token: write" not in content
     assert "PYPI_TOKEN" not in content
 
 
@@ -49,15 +54,15 @@ def test_release_workflow_has_release_concurrency_control() -> None:
     assert "cancel-in-progress: false" in content
 
 
-def test_release_workflow_separates_testpypi_and_pypi_environments() -> None:
+def test_release_workflow_documents_publish_deferral() -> None:
     # Given: the release workflow.
     content = Path(".github/workflows/release.yml").read_text(encoding="utf-8")
 
-    # When: publish environments are inspected.
-    # Then: TestPyPI and production PyPI jobs are separated.
-    assert "environment: testpypi" in content
-    assert "environment: pypi" in content
-    assert "repository-url: https://test.pypi.org/legacy/" in content
+    # When: release jobs are inspected.
+    # Then: package-index publishing is intentionally absent for the current project stage.
+    assert "Publishing to TestPyPI/PyPI is intentionally deferred." in content
+    assert "environment: testpypi" not in content
+    assert "environment: pypi" not in content
 
 
 def test_workflows_use_minimal_permissions() -> None:
@@ -66,10 +71,10 @@ def test_workflows_use_minimal_permissions() -> None:
     release = Path(".github/workflows/release.yml").read_text(encoding="utf-8")
 
     # When: workflow permissions are inspected.
-    # Then: CI is read-only and publish jobs request OIDC only where needed.
+    # Then: CI and release stay read-only while publishing is deferred.
     assert "permissions:\n  contents: read" in ci
-    assert "contents: read" in release
-    assert "id-token: write" in release
+    assert "permissions:\n  contents: read" in release
+    assert "id-token: write" not in release
 
 
 def test_workflows_opt_into_node24_actions_runtime() -> None:
@@ -103,5 +108,4 @@ def test_workflows_use_node24_ready_action_versions() -> None:
     assert "actions/checkout@v6" in workflow_text
     assert "actions/setup-python@v6" in workflow_text
     assert "actions/upload-artifact@v7.0.1" in workflow_text
-    assert "actions/download-artifact@v8.0.1" in workflow_text
     assert "astral-sh/setup-uv@v8.2.0" in workflow_text
