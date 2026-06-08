@@ -29,6 +29,10 @@ as working agreements rather than permanent policy.
 
 - When real work shows friction, make the smallest relevant update in the
   same PR that exposed it.
+- When a change makes code, docs, skills, tests, fixtures, or workflow paths
+  obsolete, remove the smallest directly related dead surface in the same PR.
+- Do not run broad cleanup sweeps unless the user asks for cleanup or the
+  obsolete surface blocks the current work.
 - Prefer one local edit over a new backlog, automation, or evaluation process.
 - Promote a rule only after the same issue has repeated across multiple tasks.
 - Add or strengthen hard rules immediately only for safety, data loss, security,
