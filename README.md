@@ -75,6 +75,14 @@ Read the result as a handoff decision:
 5. Use `advise` or `report` for report-only wording and recruiter-readiness notes.
 6. Run `doctor` with `policy/submission-policy.yml` before calling the resume ready.
 
+## Career Discovery
+
+When you feel stuck before writing a resume, start with career discovery. The
+agent should build a source inventory, read repository knowledge packs and
+project documents, create project story cards, ask interview questions for
+missing facts, and keep a claim backlog until the user confirms contribution,
+scope, dates, metrics, and proof.
+
 ## Agent Workflow
 
 Agents should start with compact JSON, then stop at the policy gate:
@@ -88,6 +96,7 @@ Never call a resume submission-ready when the policy doctor fails. Use [docs/age
 
 Agents that support repository skills can use:
 
+- [$career-discovery-coordinator](skills/career-discovery-coordinator/SKILL.md) when career history is scattered across repositories, documents, notes, and memory.
 - [$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md) for the end-to-end safe submission workflow.
 - [$evidence-triage](skills/evidence-triage/SKILL.md) when they only need to classify missing proof before editing.
 - [$repo-evidence-intake](skills/repo-evidence-intake/SKILL.md) before using repository facts in resume or portfolio work.
@@ -188,5 +197,6 @@ uv build
 | [docs/ledger-schema.md](docs/ledger-schema.md) | Ledger, Advice JSON, and Coordinate JSON schemas. |
 | [docs/repo-intake.md](docs/repo-intake.md) | Repository evidence intake workflow and schemas. |
 | [docs/agent-guardrails.md](docs/agent-guardrails.md) | Safe behavior for AI agents. |
+| [docs/career-discovery.md](docs/career-discovery.md) | Career discovery workflow for turning repositories, documents, and interviews into project stories. |
 | [docs/releasing.md](docs/releasing.md) | Release and publishing process. |
 | [docs/maintenance.md](docs/maintenance.md) | Maintainer checks and deterministic rule guidance. |

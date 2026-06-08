@@ -49,6 +49,16 @@ The default policy in `policy/submission-policy.yml` keeps resume edits conserva
 
 When in doubt, leave the claim weaker and ask for proof.
 
+## Career Discovery
+
+Start with career discovery when the user feels stuck before writing. Create project story cards before resume bullets.
+
+- Do not turn repository presence into personal contribution evidence.
+- Use interview questions to fill missing role, scope, date, metric, and impact facts.
+- Keep uncertain items in `claim-backlog.yml` until confirmed.
+- Keep source inventory, project story cards, evidence gaps, and claim backlog separate.
+- Hand confirmed items to the normal claim ledger and doctor workflow.
+
 ## Repository Intake
 
 Use repository intake only as a static evidence-gathering step:

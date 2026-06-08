@@ -1,0 +1,7 @@
+interface:
+  display_name: "Career Discovery Coordinator"
+  short_description: "Recover evidence-bound project stories"
+  default_prompt: "Use $career-discovery-coordinator to organize my scattered career history from repositories, documents, and interview answers."
+
+policy:
+  allow_implicit_invocation: true
