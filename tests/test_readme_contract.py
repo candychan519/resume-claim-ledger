@@ -142,6 +142,7 @@ def test_readme_documents_agent_workflow_and_skills() -> None:
         "## Agent Workflow",
         "resume-ledger coordinate claims.yml --summary --format json",
         "resume-ledger doctor claims.yml --policy policy/submission-policy.yml",
+        "[$career-discovery-coordinator](skills/career-discovery-coordinator/SKILL.md)",
         "[$resume-submission-coordinator](skills/resume-submission-coordinator/SKILL.md)",
         "[$evidence-triage](skills/evidence-triage/SKILL.md)",
         "Never call a resume submission-ready when the policy doctor fails.",
@@ -191,6 +192,10 @@ def test_readme_links_supporting_docs_in_one_table() -> None:
             "| [docs/agent-guardrails.md](docs/agent-guardrails.md) | Safe behavior "
             "for AI agents. |"
         ),
+        (
+            "| [docs/career-discovery.md](docs/career-discovery.md) | Career discovery "
+            "workflow for turning repositories, documents, and interviews into project stories. |"
+        ),
         "| [docs/releasing.md](docs/releasing.md) | Release and publishing process. |",
         (
             "| [docs/maintenance.md](docs/maintenance.md) | Maintainer checks and "
@@ -238,6 +243,47 @@ def test_agent_guardrails_document_repo_intake_safety() -> None:
     ]
 
     # Then: agents are constrained to static, report-only repository evidence intake.
+    for phrase in required:
+        assert phrase in content
+
+
+def test_readme_documents_career_discovery_starting_point() -> None:
+    # Given: the public README.
+    content = read_readme()
+
+    # When: the career discovery workflow is inspected.
+    required = [
+        "When you feel stuck before writing a resume, start with career discovery.",
+        "source inventory",
+        "project story cards",
+        "interview questions",
+        "claim backlog",
+        "[$career-discovery-coordinator](skills/career-discovery-coordinator/SKILL.md)",
+        (
+            "| [docs/career-discovery.md](docs/career-discovery.md) | Career discovery "
+            "workflow for turning repositories, documents, and interviews into project stories. |"
+        ),
+    ]
+
+    # Then: the README gives agents a first step for unclear career history.
+    for phrase in required:
+        assert phrase in content
+
+
+def test_agent_guardrails_document_career_discovery_safety() -> None:
+    # Given: the agent guardrails document.
+    content = Path("docs/agent-guardrails.md").read_text(encoding="utf-8")
+
+    # When: career discovery rules are inspected.
+    required = [
+        "Start with career discovery when the user feels stuck before writing.",
+        "Create project story cards before resume bullets.",
+        "Do not turn repository presence into personal contribution evidence.",
+        "Use interview questions to fill missing role, scope, date, metric, and impact facts.",
+        "Keep uncertain items in `claim-backlog.yml` until confirmed.",
+    ]
+
+    # Then: agents know how to explore without overclaiming.
     for phrase in required:
         assert phrase in content
 

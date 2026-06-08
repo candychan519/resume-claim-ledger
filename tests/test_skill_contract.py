@@ -145,3 +145,47 @@ def test_readme_links_repo_evidence_intake_skill() -> None:
 
     assert "skills/repo-evidence-intake/SKILL.md" in content
     assert "$repo-evidence-intake" in content
+
+
+def test_career_discovery_coordinator_skill_defines_discovery_workflow() -> None:
+    content = Path("skills/career-discovery-coordinator/SKILL.md").read_text(
+        encoding="utf-8",
+    )
+
+    required = [
+        "name: career-discovery-coordinator",
+        "description: Use when",
+        "Start with a source inventory before drafting career content.",
+        "Run `resume-ledger repo intake SOURCE --out knowledge/repos/NAME --name NAME`",
+        "Create project story cards before writing resume bullets.",
+        "Use interview questions to fill missing role, scope, date, metric, and impact facts.",
+        "Treat `claim-backlog.yml` as candidates, not final resume copy.",
+    ]
+    for phrase in required:
+        assert phrase in content
+
+
+def test_career_discovery_coordinator_skill_blocks_premature_claims() -> None:
+    content = Path("skills/career-discovery-coordinator/SKILL.md").read_text(
+        encoding="utf-8",
+    )
+
+    required = [
+        "Do not invent projects, roles, metrics, dates, employers, production usage, or ownership.",
+        "Do not turn repository presence into personal contribution evidence.",
+        "Do not ask for secret values; ask for non-secret proof instead.",
+        "Do not write final resume bullets until missing confirmations are resolved.",
+        "Keep uncertain items in `missing_confirmations` or `claim-backlog.yml`.",
+    ]
+    for phrase in required:
+        assert phrase in content
+
+
+def test_career_discovery_coordinator_openai_metadata_is_discoverable() -> None:
+    content = Path("skills/career-discovery-coordinator/agents/openai.yaml").read_text(
+        encoding="utf-8",
+    )
+
+    assert 'display_name: "Career Discovery Coordinator"' in content
+    assert "$career-discovery-coordinator" in content
+    assert "allow_implicit_invocation: true" in content
