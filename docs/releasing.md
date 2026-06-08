@@ -2,7 +2,8 @@
 
 ## Versioning
 
-Use SemVer tags in the form `vMAJOR.MINOR.PATCH`. Release only after the full local gate passes:
+Use SemVer tags in the form `vMAJOR.MINOR.PATCH`. A current release is an
+artifact-only release. Release only after the full local gate passes:
 
 ```bash
 uv run pytest -q
@@ -11,9 +12,21 @@ uv run basedpyright
 uv build
 ```
 
-## TestPyPI First
+## Artifact-Only Flow
 
-Publish to TestPyPI before production PyPI. Configure a TestPyPI Trusted Publisher for:
+The release workflow builds the source distribution and wheel, then stores them
+as a GitHub artifact named `dist`. It does not upload to TestPyPI or production
+PyPI.
+
+Use `workflow_dispatch` or a SemVer tag to run the workflow, then download the
+GitHub artifact from the run summary if you need to inspect or install the built
+package locally.
+
+## Publishing Deferred
+
+TestPyPI and PyPI publishing are intentionally disabled until the project is
+ready for public package-index expectations. When publishing becomes useful,
+restore Trusted Publishing jobs and configure a TestPyPI Trusted Publisher for:
 
 - project name: `resume-claim-ledger`
 - owner: `candychan519`
@@ -25,7 +38,10 @@ For the first upload, create it as a pending publisher in TestPyPI. The first su
 
 ## production PyPI
 
-Production PyPI publishing uses Trusted Publishing through GitHub Actions OIDC and the `pypi` GitHub environment. Configure the PyPI Trusted Publisher with:
+Production PyPI publishing should stay disabled until TestPyPI is green and the
+package is ready for external users. When enabling it, use Trusted Publishing
+through GitHub Actions OIDC and the `pypi` GitHub environment. Configure the
+PyPI Trusted Publisher with:
 
 - project name: `resume-claim-ledger`
 - owner: `candychan519`
