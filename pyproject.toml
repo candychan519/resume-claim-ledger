@@ -34,7 +34,7 @@ resume-ledger = "resume_claim_ledger.cli:app"
 dev = [
     "basedpyright>=1.31.0",
     "pytest>=8.4.0",
-    "ruff>=0.12.0",
+    "ruff>=0.15.16",
 ]
 
 [build-system]
