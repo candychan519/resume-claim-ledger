@@ -32,7 +32,7 @@ resume-ledger = "resume_claim_ledger.cli:app"
 
 [dependency-groups]
 dev = [
-    "basedpyright>=1.31.0",
+    "basedpyright>=1.39.7",
     "pytest>=8.4.0",
     "ruff>=0.12.0",
 ]
