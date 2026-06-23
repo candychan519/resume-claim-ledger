@@ -1,0 +1,23 @@
+## uv run pytest -q
+........................................................................ [ 50%]
+.......................................................................  [100%]
+pytest_exit=0
+
+## uv run ruff check .
+warning: `incorrect-blank-line-before-class` (D203) and `no-blank-line-before-class` (D211) are incompatible. Ignoring `incorrect-blank-line-before-class`.
+warning: `multi-line-summary-first-line` (D212) and `multi-line-summary-second-line` (D213) are incompatible. Ignoring `multi-line-summary-second-line`.
+All checks passed!
+ruff_exit=0
+
+## uv run basedpyright
+0 errors, 0 warnings, 0 notes
+basedpyright_exit=0
+
+## uv build
+Building source distribution...
+Building wheel from source distribution...
+Successfully built dist\resume_claim_ledger-0.1.0.tar.gz
+Successfully built dist\resume_claim_ledger-0.1.0-py3-none-any.whl
+build_exit=0
+
+FULL_GATES=PASS

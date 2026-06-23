@@ -1,0 +1,42 @@
+## git diff --name-only
+docs/agent-guardrails.md
+skills/resume-submission-coordinator/SKILL.md
+tests/test_agent_guardrails_contract.py
+tests/test_skill_contract.py
+
+## git status --short
+ M docs/agent-guardrails.md
+ M skills/resume-submission-coordinator/SKILL.md
+ A tests/test_agent_guardrails_contract.py
+ M tests/test_skill_contract.py
+?? evidence/wanted-preview-approval-diff-check.txt
+?? evidence/wanted-preview-approval-env-cleanup.txt
+?? evidence/wanted-preview-approval-full-gates.txt
+?? evidence/wanted-preview-approval-green.txt
+?? evidence/wanted-preview-approval-loc-check.txt
+?? evidence/wanted-preview-approval-manual-qa.txt
+?? evidence/wanted-preview-approval-private-scan-green.txt
+?? evidence/wanted-preview-approval-private-scan-red.txt
+?? evidence/wanted-preview-approval-readme-contract-restore.txt
+?? evidence/wanted-preview-approval-red.txt
+?? evidence/wanted-preview-approval-scope.txt
+?? evidence/wanted-preview-approval-tmux-cleanup-forced.txt
+
+## ignored matching
+ M docs/agent-guardrails.md
+ M skills/resume-submission-coordinator/SKILL.md
+ A tests/test_agent_guardrails_contract.py
+ M tests/test_skill_contract.py
+?? evidence/wanted-preview-approval-diff-check.txt
+?? evidence/wanted-preview-approval-env-cleanup.txt
+?? evidence/wanted-preview-approval-full-gates.txt
+?? evidence/wanted-preview-approval-green.txt
+?? evidence/wanted-preview-approval-loc-check.txt
+?? evidence/wanted-preview-approval-manual-qa.txt
+?? evidence/wanted-preview-approval-private-scan-green.txt
+?? evidence/wanted-preview-approval-private-scan-red.txt
+?? evidence/wanted-preview-approval-readme-contract-restore.txt
+?? evidence/wanted-preview-approval-red.txt
+?? evidence/wanted-preview-approval-scope.txt
+?? evidence/wanted-preview-approval-tmux-cleanup-forced.txt
+!! .omo/

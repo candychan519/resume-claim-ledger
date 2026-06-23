@@ -1,0 +1,18 @@
+## manual QA channel
+CLI stdout fallback after tmux send-keys timeout; no background QA process is spawned here.
+
+## contract search
+docs/agent-guardrails.md:38:- Produce a report-only before/after preview of the exact field text first.
+docs/agent-guardrails.md:39:- Apply to an external platform only after the user explicitly approves the exact text.
+docs/agent-guardrails.md:40:- Record a post-apply receipt with the platform or surface, field, save action, exact-match verification, and whether final submit was clicked.
+skills/resume-submission-coordinator/SKILL.md:45:Before applying approved resume text to an external platform, produce a report-only before/after preview.
+skills/resume-submission-coordinator/SKILL.md:47:Apply to an external platform only after the user explicitly approves the exact text.
+skills/resume-submission-coordinator/SKILL.md:49:After an approved platform apply, record a receipt with the surface, field, save action, exact-match verification, and whether final submit was clicked.
+
+## recursive private marker scan
+tests/test_repo_reporter.py:98:    assert "C:/Users/" not in combined
+
+## added-line private marker scan
+
+## cleanup
+forced tmux cleanup receipt: evidence/wanted-preview-approval-tmux-cleanup-forced.txt

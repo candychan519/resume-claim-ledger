@@ -1,0 +1,56 @@
+Using CPython 3.13.13 interpreter at: C:\Users\wjfeo\AppData\Local\Programs\Python\Python313\python.exe
+Creating virtual environment at: .venv
+Installed 16 packages in 2.15s
+..F.......................F.......                                       [100%]
+================================== FAILURES ===================================
+__ test_resume_submission_coordinator_skill_requires_platform_apply_approval __
+
+    def test_resume_submission_coordinator_skill_requires_platform_apply_approval() -> None:
+        content = Path("skills/resume-submission-coordinator/SKILL.md").read_text(
+            encoding="utf-8",
+        )
+
+        required = [
+            (
+                "Before applying approved resume text to an external platform, produce "
+                "a report-only before/after preview."
+            ),
+            "Apply to an external platform only after the user explicitly approves the exact text.",
+            (
+                "After an approved platform apply, record a receipt with the surface, field, "
+                "save action, exact-match verification, and whether final submit was clicked."
+            ),
+        ]
+        for phrase in required:
+>           assert phrase in content
+E           AssertionError: assert 'Before applying approved resume text to an external platform, produce a report-only before/after preview.' in '---\nname: resume-submission-coordinator\ndescription: Use when an agent is preparing, reviewing, or coordinating a r...ewed\n- doctor policy passed\nResidual risk:\n- Only note assumptions that still depend on user-provided facts.\n```\n'
+
+tests\test_skill_contract.py:54: AssertionError
+____ test_agent_guardrails_require_platform_apply_preview_approval_receipt ____
+
+    def test_agent_guardrails_require_platform_apply_preview_approval_receipt() -> None:
+        # Given: the agent guardrails document.
+        content = Path("docs/agent-guardrails.md").read_text(encoding="utf-8")
+
+        # When: external platform apply rules are inspected.
+        required = [
+            "Produce a report-only before/after preview of the exact field text first.",
+            "Apply to an external platform only after the user explicitly approves the exact text.",
+            (
+                "Record a post-apply receipt with the platform or surface, field, save action, "
+                "exact-match verification, and whether final submit was clicked."
+            ),
+            "Do not copy private platform screenshots, URLs, local paths, or personal resume values",
+        ]
+
+        # Then: live platform edits stay approval-gated and privacy-safe.
+        for phrase in required:
+>           assert phrase in content
+E           AssertionError: assert 'Produce a report-only before/after preview of the exact field text first.' in '# Agent Guardrails\n\nUse this checklist when an AI agent helps prepare a resume submission from this repository.\n\n...the user for contribution evidence before\nmoving any candidate into a resume, cover letter, or portfolio narrative.\n'
+
+tests\test_readme_contract.py:246: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_skill_contract.py::test_resume_submission_coordinator_skill_requires_platform_apply_approval
+FAILED tests/test_readme_contract.py::test_agent_guardrails_require_platform_apply_preview_approval_receipt
+
+pytest_exit=1

@@ -1,0 +1,4 @@
+## Recursive scan for known private markers
+tests/test_repo_reporter.py:98:    assert "C:/Users/" not in combined
+
+## Added-line scan for known private markers

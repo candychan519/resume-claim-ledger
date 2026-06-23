@@ -34,6 +34,26 @@ def test_resume_submission_coordinator_skill_blocks_unsafe_agent_moves() -> None
         assert phrase in content
 
 
+def test_resume_submission_coordinator_skill_requires_platform_apply_approval() -> None:
+    content = Path("skills/resume-submission-coordinator/SKILL.md").read_text(
+        encoding="utf-8",
+    )
+
+    required = [
+        (
+            "Before applying approved resume text to an external platform, produce "
+            "a report-only before/after preview."
+        ),
+        "Apply to an external platform only after the user explicitly approves the exact text.",
+        (
+            "After an approved platform apply, record a receipt with the surface, field, "
+            "save action, exact-match verification, and whether final submit was clicked."
+        ),
+    ]
+    for phrase in required:
+        assert phrase in content
+
+
 def test_readme_links_resume_submission_coordinator_skill() -> None:
     content = Path("README.md").read_text(encoding="utf-8")
 

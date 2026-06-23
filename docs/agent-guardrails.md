@@ -31,6 +31,15 @@ resume-ledger doctor claims.yml --policy policy/submission-policy.yml
 
 If this command exits non-zero, the agent should not call the resume submission-ready.
 
+## External Platform Apply
+
+Keep source resume editing and live external platform apply steps separate.
+
+- Produce a report-only before/after preview of the exact field text first.
+- Apply to an external platform only after the user explicitly approves the exact text.
+- Record a post-apply receipt with the platform or surface, field, save action, exact-match verification, and whether final submit was clicked.
+- Do not copy private platform screenshots, URLs, local paths, or personal resume values into public repository docs, skills, tests, or evidence.
+
 ## Policy Meaning
 
 The default policy in `policy/submission-policy.yml` keeps resume edits conservative:

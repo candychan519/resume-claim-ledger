@@ -1,0 +1,5 @@
+C:\Users\wjfeo\dev\resume-claim-ledger\.pytest_cache
+C:\Users\wjfeo\dev\resume-claim-ledger\.ruff_cache
+C:\Users\wjfeo\dev\resume-claim-ledger\.venv
+C:\Users\wjfeo\dev\resume-claim-ledger\src\resume_claim_ledger\__pycache__
+C:\Users\wjfeo\dev\resume-claim-ledger\tests\__pycache__
